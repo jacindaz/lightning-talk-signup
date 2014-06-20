@@ -5,6 +5,7 @@ var lightningTalks = [
 ];
 
 
+
 function submitTalk(){
   var userName = document.sign_up.input_name.value;
   var userTopic = document.sign_up.talk_topic.value;
@@ -14,6 +15,20 @@ function submitTalk(){
 }
 
 
+function addTalk(){
+  var userName = document.sign_up.input_name.value;
+  var userTopic = document.sign_up.talk_topic.value;
+  var addTalkListItem = $("<li>");
+  addTalkListItem.html(userName + ": " + userTopic);
+  $('ul#talk-list').append(addTalkListItem);
+}
+
+function persistTalk(){
+  var userName = document.sign_up.input_name.value;
+  var userTopic = document.sign_up.talk_topic.value;
+
+  document.getElementById("talk-list").innerHTML = (userName + ": " + userTopic);
+}
 
 $( "#sign-up" ).submit(function( event ) {
   //add hash with talk info to array
