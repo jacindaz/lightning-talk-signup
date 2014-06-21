@@ -4,26 +4,16 @@ var lightningTalks = [
   { name: "Yvan", topic: "testing"}
 ];
 
+/*doesn't work, for some reason*/
 function alertSubmitTalk(){
   alert("Sweet! Thanks " + userName + " for signing up!");
 }
 
-function submitTalk(){
-  var userName = document.sign_up.input_name.value;
-  var userTopic = document.sign_up.talk_topic.value;
-  var talkDeets = { name: userName, topic: userTopic };
-  lightningTalks.push(talkDeets);
-  alert("Sweet! Thanks " + userName + " for signing up!");
-}
 
+$( "#talk-description-toggle" ).toggle(function() {
 
-function addTalk(){
-  var userName = document.sign_up.input_name.value;
-  var userTopic = document.sign_up.talk_topic.value;
-  var addTalkListItem = $("<li>");
-  addTalkListItem.html(userName + ": " + userTopic);
-  $('ul#talk-list').append(addTalkListItem);
-}
+})
+
 
 function persistTalk(){
   var userName = document.sign_up.input_name.value;
