@@ -28,12 +28,12 @@ def save_to_db(first, last, topic)
   insert = "INSERT INTO talks (first_name, last_name, talk_title, created_at)
               VALUES ($1, $2, $3, now())"
   @insert_db = db_connection do |conn|
-              conn.exec_params(insert, [first, last, talk])
+              conn.exec_params(insert, [first, last, topic])
             end
 end
 
 def is_empty?(first, last, topic)
-  return (!first.empty? && !last.empty? && !topic.empty?)
+  return !first.empty? && !last.empty? && !topic.empty?
 end
 
 def remove_double_quote(string)
