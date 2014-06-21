@@ -11,7 +11,8 @@ function alertSubmitTalk(){
 
 
 $( "#talk-description-toggle" ).toggle(function() {
-
+  var showDescription = document.getElementById('talk-description-toggle');
+  showDescription.style.display = "block";
 })
 
 

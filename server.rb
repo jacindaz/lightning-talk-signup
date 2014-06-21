@@ -27,9 +27,10 @@ post '/add_talk' do
   @first_name = params["firstname"]
   @last_name = params["lastname"]
   @talk_title = params["usertalktopic"]
+  @description = params["talk_description"]
 
-  if !is_empty?(@first_name, @last_name, @talk_title) && !is_dupe?(@first_name, @last_name, @talk_title)
-    save_to_db(@first_name, @last_name, @talk_title)
+  if !is_empty?(@first_name, @last_name, @talk_title, @description) && !is_dupe?(@first_name, @last_name, @talk_title, @description)
+    save_to_db(@first_name, @last_name, @talk_title, @description)
     redirect '/thanks'
   else
     flash[:notice] = "I'm sorry, your talk could not be saved."

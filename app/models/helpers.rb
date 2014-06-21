@@ -24,31 +24,28 @@ def query_db(query, params)
   end
 end
 
-def save_to_db(first, last, topic)
-  insert = "INSERT INTO talks (first_name, last_name, talk_title, created_at)
-              VALUES ($1, $2, $3, now())"
+def save_to_db(first, last, topic, description)
+  insert = "INSERT INTO talks (first_name, last_name, talk_title, description, created_at)
+              VALUES ($1, $2, $3, $4, now())"
   @insert_db = db_connection do |conn|
-              conn.exec_params(insert, [first, last, topic])
+              conn.exec_params(insert, [first, last, topic, description])
             end
 end
 
-def is_empty?(first, last, topic)
-  return first.empty? || last.empty? || topic.empty?
+def is_empty?(first, last, topic, description)
+  return first.empty? || last.empty? || topic.empty? || description.empty?
 end
 #puts is_empty?('', '', '')               # returns true
-puts is_empty?('', 'Zhong', '')           # returns true
+#puts is_empty?('', 'Zhong', '')           # returns true
 
-def remove_double_quote(string)
-  if string
-  end
-end
 
 #true if no duplicates, false if is a dupe
-def is_dupe?(first, last, topic)
+def is_dupe?(first, last, topic, description)
   all_talks = return_all_talks
   first_exist = false
   last_exist = false
   topic_exist = false
+  description_exist = false
   return_all_talks.each do |talk|
     if talk["first_name"] == first
       first_exist = true
@@ -59,7 +56,10 @@ def is_dupe?(first, last, topic)
     if talk["talk_title"] == topic
       topic_exist = true
     end
-    if (topic_exist || (first_exist && last_exist)) == true
+    if talk["talk_description"] == description
+      description_exist = true
+    end
+    if (topic_exist || (first_exist && last_exist) || description_exist) == true
       return true
     end
   end
