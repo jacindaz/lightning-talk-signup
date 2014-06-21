@@ -19,6 +19,7 @@ get '/' do
   @name = params[:username]
   @topic = params[:usertalktopic]
   @all_talks = return_all_talks
+
   erb :index
 end
 
@@ -27,17 +28,17 @@ post '/add_talk' do
   @last_name = params["lastname"]
   @talk_title = params["usertalktopic"]
 
-  binding.pry
-
   if !is_empty?(@first_name, @last_name, @talk_title) && !is_dupe?(@first_name, @last_name, @talk_title)
     save_to_db(@first_name, @last_name, @talk_title)
-    redirect '/'
+    redirect '/thanks'
   else
     flash[:notice] = "I'm sorry, your talk could not be saved."
     redirect '/'
   end
-  #binding.pry
+end
 
+get '/thanks' do
+  erb :thanks
 end
 
 

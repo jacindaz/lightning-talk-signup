@@ -4,7 +4,9 @@ var lightningTalks = [
   { name: "Yvan", topic: "testing"}
 ];
 
-
+function alertSubmitTalk(){
+  alert("Sweet! Thanks " + userName + " for signing up!");
+}
 
 function submitTalk(){
   var userName = document.sign_up.input_name.value;

@@ -2,7 +2,8 @@
 <html>
 <head>
   <title>Lightning Talk Signups</title>
-  <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
   <link rel="stylesheet" type="text/css" href="/css/styles.css">
   <script src="/js/jquery-1.11.0.js" type="text/javascript"></script>
   <script src="/js/app.js" type="text/javascript"></script>
@@ -10,13 +11,14 @@
 </head>
 
 <body>
-<img src="/images/launch-academy-logo.png" style="float:left;">
 
-  <center>
-  <img src="/images/lightning_talks_image.jpg" id="main-image">
-</center>
+<a href="/" style="text-decoration:none;">
+  <h1 class="header" style="text-align:left;">
+    <img src="/images/launch-academy-logo.png">&nbsp;The (En)Lightning Talks
+  </h1>
+</a>
 
-<br>
+<div id="inner-div">
 
 <section>
   <%= yield %>

@@ -33,8 +33,10 @@ def save_to_db(first, last, topic)
 end
 
 def is_empty?(first, last, topic)
-  return !first.empty? && !last.empty? && !topic.empty?
+  return first.empty? || last.empty? || topic.empty?
 end
+#puts is_empty?('', '', '')               # returns true
+puts is_empty?('', 'Zhong', '')           # returns true
 
 def remove_double_quote(string)
   if string

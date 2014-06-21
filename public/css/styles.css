@@ -2,6 +2,7 @@
 body {
   margin: 2% 15%;
   background-color: #F5F242;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 #inner-div {
@@ -10,15 +11,21 @@ body {
   padding-bottom: 50px;
 }
 
+.header {
+  font-family: Monaco, Consolas, "Lucida Console", monospace;
+  font-size: 4em;
+}
+
 #hide-div {
   display: none;
 }
 
 #main-image {
-    height: 100px;
+    height: 50px;
 }
 
 
 h1, h2, h3, h4, h5 {
   color: #ed197b;
+  font-family: Monaco, Consolas, "Lucida Console", monospace;
 }

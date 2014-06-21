@@ -1,49 +1,43 @@
-<div id="inner-div">
+<h3>Thanks for Sharing your Wisdom</h3>
 
-<h3>
-  <center>
-    <a href="#sign-up">Sign up for a Lightning Talk!</a>
-  </center>
-</h3>
-
-<hr>
-
-<h3>Who's Signed Up</h3>
-
-<table class="table table-hover">
-  <th>Who</th>
-  <th>Topic</th>
-  <% @all_talks.each do |talk| %>
-    <tr>
-      <td><%= talk["first_name"] %> <%= talk["last_name"] %></td>
-      <td><%= talk["talk_title"] %></td>
-    </tr>
-  <% end %>
-</table>
+<% if @all_talks.nil? %>
+  <p>Boo. No one has signed up yet!</p>
+<% else %>
+  <table class="table table-hover">
+    <th>Who</th>
+    <th>Topic</th>
+    <% @all_talks.each do |talk| %>
+      <tr>
+        <td><%= talk["first_name"] %> <%= talk["last_name"] %></td>
+        <td><%= talk["talk_title"] %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
 
 <hr>
 
-<h3>Sign up Here</h3>
+<h3>Please enlighten us about All The Things</h3>
 
 <div name="sign-up">
   <form name="sign_up" id="sign-up" action="/add_talk" method="post">
 
     <div class="form-group">
       <label for="input-name">First name</label>
-      <input type="text" class="form-control" id="input_first_name" placeholder="First name" name="firstname">
+      <input type="text" class="form-control" id="input_first_name" placeholder="First name" name="firstname" required>
     </div>
 
     <div class="form-group">
       <label for="input-name">Last name</label>
-      <input type="text" class="form-control" id="input_last_name" placeholder="Last name" name="lastname">
+      <input type="text" class="form-control" id="input_last_name" placeholder="Last name" name="lastname" required>
     </div>
 
     <div class="form-group">
       <label for="talk-topic">Lightning Talk Topic</label>
-      <input type="text" class="form-control" id="talk_topic" placeholder="Enter topic" name="usertalktopic">
+      <input type="text" class="form-control" id="talk_topic" placeholder="Enter topic" name="usertalktopic" required>
     </div>
 
-    <input type="submit" name="button" value="Get excited!" onClick="submitTalk();persistTalk()">
+    <input type="submit" name="button" value="Get excited!" onClick="alertSubmitTalk()">
 
   </form>
 
