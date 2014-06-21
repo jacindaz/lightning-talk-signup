@@ -10,30 +10,40 @@
 
 <h3>Who's Signed Up</h3>
 
-<ul datarole="listview" id="talk-list">
-  <% @talks.each do |talk| %>
-    <li><%= talk %></li>
+<table class="table table-hover">
+  <th>Who</th>
+  <th>Topic</th>
+  <% @all_talks.each do |talk| %>
+    <tr>
+      <td><%= talk["first_name"] %> <%= talk["last_name"] %></td>
+      <td><%= talk["talk_title"] %></td>
+    </tr>
   <% end %>
-</ul>
+</table>
 
 <hr>
 
 <h3>Sign up Here</h3>
 
 <div name="sign-up">
-  <form name="sign_up" id="sign-up">
+  <form name="sign_up" id="sign-up" action="/add_talk" method="post">
 
     <div class="form-group">
-      <label for="input-name">Name</label>
-      <input type="text" class="form-control" id="input_name" placeholder="Enter name">
+      <label for="input-name">First name</label>
+      <input type="text" class="form-control" id="input_first_name" placeholder="First name" name="firstname">
     </div>
 
     <div class="form-group">
-      <label for="talk-topic">Lightning talk Topic</label>
-      <input type="text" class="form-control" id="talk_topic" placeholder="Enter topic">
+      <label for="input-name">Last name</label>
+      <input type="text" class="form-control" id="input_last_name" placeholder="Last name" name="lastname">
     </div>
 
-    <input type="button" name="button" value="Get excited!" onClick="submitTalk();persistTalk()">
+    <div class="form-group">
+      <label for="talk-topic">Lightning Talk Topic</label>
+      <input type="text" class="form-control" id="talk_topic" placeholder="Enter topic" name="usertalktopic">
+    </div>
+
+    <input type="submit" name="button" value="Get excited!" onClick="submitTalk();persistTalk()">
 
   </form>
 
