@@ -33,3 +33,17 @@ h1, h2, h3, h4, h5 {
 #talk-description-toggle {
   display:none;
 }
+
+a, a:hover {
+  text-decoration: none;
+}
+
+/***********jQuery Accordion Styles************/
+div#accordion div.heading {
+  background: #F4FFF9;
+  display: block;
+  padding: 5px;
+  text-decoration: none;
+  border: 1px black;
+}
+

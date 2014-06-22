@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Lightning Talk Signups</title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery-ui-accordion.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#accordion').accordion();
+  });
+</script>
+</head>
+
+<body>
+
+<a href="/" style="text-decoration:none;">
+  <h1 class="header" style="text-align:left;">
+    <img src="/images/launch-academy-logo.png">&nbsp;The (En)Lightning Talks
+  </h1>
+</a>
+
+<div id="inner-div">
+
+    <div id="accordion">
+      <div>
+        <a href="#recent" class="heading">
+          <h4><%= @all_talks[0]["first_name"] %> <%= @all_talks[0]["last_name"] %>: <%= @all_talks[0]["talk_title"] %>
+          </h4>
+        </a>
+          <p id="recent"><%= @all_talks[0]["description"] %></p>
+          <hr>
+      </div>
+      <div>
+        <a href="#second" class="heading">
+          <h4><%= @all_talks[0]["first_name"] %> <%= @all_talks[0]["last_name"] %>: <%= @all_talks[0]["talk_title"] %>
+          </h4>
+        </a>
+          <p id="second"><%= @all_talks[0]["description"] %></p>
+          <hr>
+      </div>
+</div>
+
+</div>
+
+
+</div>
+</body>
+</html>

@@ -16,11 +16,13 @@ end
 #ROUTES and VIEWS--------------------------------------------------------------------------------
 
 get '/' do
-  @name = params[:username]
-  @topic = params[:usertalktopic]
   @all_talks = return_all_talks
-
   erb :index
+end
+
+get '/test' do
+  @all_talks = return_all_talks
+  erb :index2
 end
 
 post '/add_talk' do

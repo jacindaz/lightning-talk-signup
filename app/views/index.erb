@@ -1,24 +1,53 @@
-<h3>Thanks for Sharing your Wisdom</h3>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lightning Talk Signups</title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
 
-<% if @all_talks.nil? %>
-  <p>Boo. No one has signed up yet!</p>
-<% else %>
-  <table class="table table-hover">
-    <th>Who</th>
-    <th>Topic</th>
-    <% @all_talks.each do |talk| %>
-      <tr>
-        <td><%= talk["first_name"] %> <%= talk["last_name"] %></td>
-        <td><%= talk["talk_title"] %></td>
-      </tr>
-      <tr id="talk-description-toggle">
-        <td><%= talk["description"] %></td>
-      </tr>
-    <% end %>
-  </table>
-<% end %>
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/jquery-ui-accordion.js"></script>
 
-<hr>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#accordion').accordion();
+  });
+</script>
+
+
+</head>
+
+<body>
+
+<a href="/" style="text-decoration:none;">
+  <h1 class="header" style="text-align:left;">
+    <img src="/images/launch-academy-logo.png">&nbsp;The (En)Lightning Talks
+  </h1>
+</a>
+
+<div id="inner-div">
+
+<div id="accordion">
+  <div>
+    <a href="#recent" class="heading">
+      <h4><%= @all_talks[0]["first_name"] %> <%= @all_talks[0]["last_name"] %>: <%= @all_talks[0]["talk_title"] %>
+      </h4>
+    </a>
+      <p id="recent"><%= @all_talks[0]["description"] %></p>
+      <hr>
+  </div>
+  <div>
+    <a href="#second" class="heading">
+      <h4><%= @all_talks[0]["first_name"] %> <%= @all_talks[0]["last_name"] %>: <%= @all_talks[0]["talk_title"] %>
+      </h4>
+    </a>
+      <p id="second"><%= @all_talks[0]["description"] %></p>
+      <hr>
+  </div>
+</div>
+
+
 
 <h3>Please enlighten us about All The Things</h3>
 
@@ -54,3 +83,8 @@
 </div>
 
 
+
+<script type="text/javascript" src="js/jquery.mobile-1.4.2.js"></script>
+
+</body>
+</html>
