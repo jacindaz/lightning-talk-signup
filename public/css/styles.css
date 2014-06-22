@@ -30,20 +30,34 @@ h1, h2, h3, h4, h5 {
   font-family: Monaco, Consolas, "Lucida Console", monospace;
 }
 
-#talk-description-toggle {
-  display:none;
-}
 
 a, a:hover {
   text-decoration: none;
 }
 
 /***********jQuery Accordion Styles************/
-div#accordion div.heading {
+ul#accordion {
+  border: 1px solid #999;
+}
+.one-talk {
+  border-bottom: 1px solid #999;
+}
+ul#accordion li.one-talk:last-child { border-bottom: none; }
+
+.talk-info {
+  color: #999;
   background: #F4FFF9;
-  display: block;
-  padding: 5px;
-  text-decoration: none;
-  border: 1px black;
+  padding: 2px 15px;
+  list-style: none;
+  border: 1px #616161;
+}
+
+.talk-header {
+  border: 1px #616161;
+}
+
+.talk-body {
+  border: 1px #616161;
+  padding-bottom: 10px;
 }
 

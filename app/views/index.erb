@@ -1,51 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Lightning Talk Signups</title>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+<ul class="talk-info" id="accordion">
+<% increment = 1 %>
+  <% @all_talks.each do |talk| %>
+    <li class="one-talk">
 
-  <script type="text/javascript" src="js/jquery.js"></script>
-  <script type="text/javascript" src="js/jquery-ui-accordion.js"></script>
-
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#accordion').accordion();
-  });
-</script>
-
-
-</head>
-
-<body>
-
-<a href="/" style="text-decoration:none;">
-  <h1 class="header" style="text-align:left;">
-    <img src="/images/launch-academy-logo.png">&nbsp;The (En)Lightning Talks
-  </h1>
-</a>
-
-<div id="inner-div">
-
-<div id="accordion">
-  <div>
-    <a href="#recent" class="heading">
-      <h4><%= @all_talks[0]["first_name"] %> <%= @all_talks[0]["last_name"] %>: <%= @all_talks[0]["talk_title"] %>
-      </h4>
-    </a>
-      <p id="recent"><%= @all_talks[0]["description"] %></p>
-      <hr>
-  </div>
-  <div>
-    <a href="#second" class="heading">
-      <h4><%= @all_talks[0]["first_name"] %> <%= @all_talks[0]["last_name"] %>: <%= @all_talks[0]["talk_title"] %>
-      </h4>
-    </a>
-      <p id="second"><%= @all_talks[0]["description"] %></p>
-      <hr>
-  </div>
-</div>
+        <a href="#anchor-link<%= increment %>" class="talk-header">
+        <h4>
+          <span class="glyphicon glyphicon-chevron-down">  </span>
+          <%= talk["first_name"] %> <%= talk["last_name"] %>: <%= talk["talk_title"] %>
+        </h4>
+      </a>
+      <p class="talk-body" id="anchor-link<%= increment %>"><%= talk["description"] %></p>
+      <% increment += 1 %>
+    </li>
+  <% end %>
+</ul>
 
 
 
@@ -86,5 +54,3 @@
 
 <script type="text/javascript" src="js/jquery.mobile-1.4.2.js"></script>
 
-</body>
-</html>
