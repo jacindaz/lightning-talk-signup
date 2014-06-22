@@ -1,39 +1,23 @@
-var order = 1;
-var lightningTalks = [
-  { name: "Jacinda", topic: "XML"},
-  { name: "Yvan", topic: "testing"}
-];
-
-/*doesn't work, for some reason*/
-function alertSubmitTalk(){
-  alert("Sweet! Thanks " + userName + " for signing up!");
-}
-
-
-function toggleDescription(){
-
-}
-
-$( "#talk-description-toggle" ).toggle(function() {
-  var showDescription = document.getElementById('talk-description-toggle');
-  showDescription.style.display = "block";
-})
-
-
-function persistTalk(){
-  var userName = document.sign_up.input_name.value;
-  var userTopic = document.sign_up.talk_topic.value;
-
-  document.getElementById("talk-list").innerHTML = (userName + ": " + userTopic);
-}
-
-$( "#sign-up" ).submit(function( event ) {
-  //add hash with talk info to array
-  // var talkDeets = { name: userName, topic: userTopic };
-  // lightningTalks.push(talkDeets);
-
-  alert( "Sweet! Thanks for signing up!" );
-  event.preventDefault();
+$(document).ready(function() {
+  $('#accordion').accordion().removeClass('highlight');
 });
 
 
+
+$( "#one-talk" ).toggle(function() {
+  document.getElementById("icon-id").className = "glyphicon glyphicon-chevron-right"
+}, function() {
+  document.getElementById("icon-id").className = "glyphicon glyphicon-chevron-down"
+});
+
+
+$( "#target" ).toggle(function() {
+  alert( "First handler for .toggle() called." );
+}, function() {
+  alert( "Second handler for .toggle() called." );
+});
+
+function thanksAlert() {
+  var userName = document.sign_up.input_first_name.value;
+  alert("Thanks " + userName + " for submitting a lightning talk!");
+}

@@ -1,11 +1,10 @@
 <ul class="talk-info" id="accordion">
 <% increment = 1 %>
   <% @all_talks.each do |talk| %>
-    <li class="one-talk">
-
+    <li class="one-talk" id="one-talk">
         <a href="#anchor-link<%= increment %>" class="talk-header">
         <h4>
-          <span class="glyphicon glyphicon-chevron-down">  </span>
+          <span class="glyphicon glyphicon-chevron-down" id="icon-id">  </span>
           <%= talk["first_name"] %> <%= talk["last_name"] %>: <%= talk["talk_title"] %>
         </h4>
       </a>
@@ -15,7 +14,9 @@
   <% end %>
 </ul>
 
-
+<div id="target">
+  Click here
+</div>
 
 <h3>Please enlighten us about All The Things</h3>
 
@@ -42,15 +43,10 @@
       <textarea class="form-control" id="talk_description" name="talk_description" placeholder="Give us the deets" required></textarea>
     </div>
 
-    <input type="submit" name="button" value="Get excited!" onClick="alertSubmitTalk()">
+    <input type="submit" name="button" value="Get excited!" onClick="thanksAlert()">
 
   </form>
-
-</div>
-
 </div>
 
 
-
-<script type="text/javascript" src="js/jquery.mobile-1.4.2.js"></script>
 
