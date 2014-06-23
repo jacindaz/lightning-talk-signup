@@ -59,3 +59,22 @@ ul#accordion li.one-talk:first-child { border-top: none; }
   padding-bottom: 10px;
 }
 
+/***********Submitting a talk HTML5 Form styles************/
+#sign-up {
+  width: 700px;
+}
+input[required] {
+    background-color: #f7fdff;
+}
+textarea {
+  width: 100%;
+}
+input[name="firstname"], input[name="lastname"] {
+  width: 100%;
+}
+input[name="usertalktopic"] {
+  width: 100%;
+}
+.form-div {
+  margin-bottom: 20px;
+}

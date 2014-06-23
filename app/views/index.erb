@@ -18,27 +18,27 @@
 
 <h3>Please enlighten us about All The Things</h3>
 
-<div name="sign-up">
-  <form name="sign_up" id="sign-up" action="/add_talk" method="post">
+<div id="sign-up">
+  <form name="sign_up" id="sign-up" action="/add_talk" method="post" autocomplete="off">
 
-    <div class="form-group">
+    <div class="form-inline form-div">
       <label for="input-name">First name</label>
-      <input type="text" class="form-control" id="input_first_name" placeholder="First name" name="firstname" required>
+      <input type="text" class="form-control" id="input_first_name" name="firstname" autofocus required>
     </div>
 
-    <div class="form-group">
-      <label for="input-name">Last name</label>
-      <input type="text" class="form-control" id="input_last_name" placeholder="Last name" name="lastname" required>
+    <div class="form-group form-div">
+      <label for="last-name">Last name</label>
+      <input type="text" class="form-control" id="input_last_name" name="lastname" autofocus required>
     </div>
 
-    <div class="form-group">
-      <label for="talk-topic">Lightning Talk Topic</label>
-      <input class="form-control" id="talk_topic" placeholder="Enter topic" name="usertalktopic" required>
+    <div class="form-group form-div">
+      <label for="talk-topic">Topic</label>
+      <input type="text" class="form-control" id="talk_topic" name="usertalktopic" autofocus required>
     </div>
 
-    <div class="form-group">
+    <div class="form-group form-div">
       <label for="talk-description">Description</label>
-      <textarea class="form-control" id="talk_description" name="talk_description" placeholder="Give us the deets" required></textarea>
+      <textarea class="form-control" id="talk_description" name="talk_description" placeholder="Deets please." maxlength="500" width="500px" autofocus required></textarea>
     </div>
 
     <input type="submit" name="button" value="Get excited!" onClick="thanksAlert()">

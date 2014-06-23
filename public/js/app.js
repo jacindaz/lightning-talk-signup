@@ -1,10 +1,4 @@
-$(document).ready(function() {
-  $('#accordion').accordion().removeClass('highlight');
-});
 
-$('#one-talk-id').on('click', function() {
-  alert('button 1 has been clicked');
-});
 
 $( '#one-talk-id-la' ).click(function() {
   alert("inside one-talk-id alert")
