@@ -31,26 +31,24 @@ h1, h2, h3, h4, h5 {
 }
 
 
-a, a:hover {
+a:link, a:visited, a:hover, a:active {
   text-decoration: none;
 }
 
 /***********jQuery Accordion Styles************/
 ul#accordion {
   border: 1px solid #999;
-}
-.one-talk {
-  border-bottom: 1px solid #999;
-}
-ul#accordion li.one-talk:last-child { border-bottom: none; }
-
-.talk-info {
   color: #999;
   background: #F4FFF9;
   padding: 2px 15px;
   list-style: none;
-  border: 1px #616161;
 }
+.one-talk {
+  border-bottom: 1px solid #999;
+  border-top: 1px solid #999;
+}
+ul#accordion li.one-talk:last-child { border-bottom: none; }
+ul#accordion li.one-talk:first-child { border-top: none; }
 
 .talk-header {
   border: 1px #616161;
