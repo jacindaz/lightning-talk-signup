@@ -1,3 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lightning Talk Signups</title>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+  <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+  <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
+
+  <script>
+    $(function() {
+      $( "#accordion" ).accordion();
+    });
+  </script>
+
+</head>
+
+<body>
+
+  <a href="/" style="text-decoration:none;">
+  <h2 class="header" style="text-align:left;">
+    <img src="/images/launch-academy-logo.png">&nbsp;The (En)Lightning Talks
+  </h2>
+</a>
+
+
+<div id="inner-div">
+
 <ul class="talk-info" id="accordion">
 <% increment = 1 %>
   <% @all_talks.each do |talk| %>
@@ -14,9 +43,7 @@
   <% end %>
 </ul>
 
-<div id="target">
-  Click here
-</div>
+<br>
 
 <h3>Please enlighten us about All The Things</h3>
 
@@ -48,5 +75,7 @@
   </form>
 </div>
 
+</div>
 
-
+</body>
+</html>

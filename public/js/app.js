@@ -2,14 +2,18 @@ $(document).ready(function() {
   $('#accordion').accordion().removeClass('highlight');
 });
 
-
-
-$( "#one-talk" ).toggle(function() {
-  document.getElementById("icon-id").className = "glyphicon glyphicon-chevron-right"
-}, function() {
-  document.getElementById("icon-id").className = "glyphicon glyphicon-chevron-down"
+$('#one-talk-id').on('click', function() {
+  alert('button 1 has been clicked');
 });
 
+$( '#one-talk-id-la' ).click(function() {
+  alert("inside one-talk-id alert")
+  toggle(function() {
+    document.getElementById("span-icon-id").className = "glyphicon glyphicon-chevron-right"
+  }, function() {
+    document.getElementById("span-icon-id").className = "glyphicon glyphicon-chevron-down"
+  });
+});
 
 $( "#target" ).toggle(function() {
   alert( "First handler for .toggle() called." );
