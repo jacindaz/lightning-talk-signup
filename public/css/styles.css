@@ -87,8 +87,8 @@ input[required] {
 textarea {
   width: 100%;
 }
-input[name="firstname"], input[name="lastname"] {
-  width: 100%;
+.form-inline .form-group .form-div {
+    width: 500px;
 }
 input[name="usertalktopic"] {
   width: 100%;
@@ -96,3 +96,4 @@ input[name="usertalktopic"] {
 .form-div {
   margin-bottom: 20px;
 }
+#last-name-padding { padding-left: 20px; }
