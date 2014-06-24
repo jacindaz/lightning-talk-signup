@@ -19,6 +19,11 @@ configure :production do
   set :database_config, production_database_config
 end
 
+helpers do
+  include Rack::Utils
+  alias_method :h, :escape_html
+end
+
 def db_connection
   begin
     #connection = PG.connect(dbname: 'lightning-talks_development')
@@ -52,7 +57,11 @@ def save_to_db(first, last, topic, description)
 end
 
 def is_empty?(first, last, topic, description)
-  return first.empty? || last.empty? || topic.empty? || description.empty?
+  first_validation = first.empty? || (first != "")
+  last_validation = last.empty? || (last != "")
+  topic_validation = topic.empty? || (topic != "")
+  description_validation = description.empty? || (description != "")
+  return first_validation || last_validation || topic_validation || description_validation
 end
 
 def is_dupe?(first, last, topic, description)
@@ -80,3 +89,4 @@ def is_dupe?(first, last, topic, description)
   end
   false
 end
+
