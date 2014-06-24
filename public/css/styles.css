@@ -73,7 +73,7 @@ ul#accordion li.one-talk:first-child { border-top: none; }
   width:20px;
   height:20px;
 }
-#accordion .ui-state-focus{
+ul#accordion .ui-state-focus{
     outline: none;
 }
 /***********Submitting a talk HTML5 Form styles************/
