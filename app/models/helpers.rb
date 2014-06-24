@@ -57,12 +57,13 @@ def save_to_db(first, last, topic, description)
 end
 
 def is_empty?(first, last, topic, description)
-  first_validation = first.empty? || (first != "")
-  last_validation = last.empty? || (last != "")
-  topic_validation = topic.empty? || (topic != "")
-  description_validation = description.empty? || (description != "")
+  first_validation = first.empty? || (first == "")
+  last_validation = last.empty? || (last == "")
+  topic_validation = topic.empty? || (topic == "")
+  description_validation = description.empty? || (description == "")
   return first_validation || last_validation || topic_validation || description_validation
 end
+#puts is_empty?("", "", "la")
 
 def is_dupe?(first, last, topic, description)
   all_talks = return_all_talks
