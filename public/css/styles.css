@@ -58,6 +58,24 @@ ul#accordion li.one-talk:first-child { border-top: none; }
   border: 1px #616161;
   padding-bottom: 10px;
 }
+.ui-accordion-header-icon {
+    display: inline-block;
+}
+.ui-icon.arrow-right {
+  background:url('../images/icons/arrow-right.png') !important;
+  background-size: 20px;
+  display: inline-block;
+  width:20px;
+  height:20px;
+}
+
+.ui-icon.arrow-down {
+  background:url('../images/icons/arrow-down.png') !important;
+  background-size: 20px;
+  display: inline-block;
+  width:20px;
+  height:20px;
+}
 
 /***********Submitting a talk HTML5 Form styles************/
 #sign-up {

@@ -3,9 +3,7 @@
   <% @all_talks.each do |talk| %>
     <li class="one-talk" id="one-talk">
         <a href="#anchor-link<%= increment %>" class="talk-header">
-        <h4>
-          <span class="glyphicon glyphicon-chevron-down" id="icon-id">  </span>
-          <%= talk["first_name"] %> <%= talk["last_name"] %>: <%= talk["talk_title"] %>
+        <h4 class="ui-accordion-header-icon"><%= talk["first_name"] %> <%= talk["last_name"] %>: <%= talk["talk_title"] %>
         </h4>
       </a>
       <p class="talk-body" id="anchor-link<%= increment %>"><%= talk["description"] %></p>
