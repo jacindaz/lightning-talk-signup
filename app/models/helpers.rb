@@ -2,8 +2,8 @@ require 'pg'
 
 def db_connection
   begin
-    connection = PG.connect(dbname: 'lightning-talks_development')
-    #connection = PG.connect(settings.database_config)
+    #connection = PG.connect(dbname: 'lightning-talks_development')
+    connection = PG.connect(settings.database_config)
     yield(connection)
   ensure
     connection.close
