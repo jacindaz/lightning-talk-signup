@@ -13,15 +13,11 @@ body {
 
 .header {
   font-family: Monaco, Consolas, "Lucida Console", monospace;
-  font-size: 4em;
+  font-size: 4vw;
 }
 
-#hide-div {
-  display: none;
-}
-
-#main-image {
-    height: 50px;
+#launch-logo {
+  width: 9vw;
 }
 
 
@@ -29,6 +25,7 @@ h1, h2, h3, h4, h5 {
   color: #ed197b;
   font-family: Monaco, Consolas, "Lucida Console", monospace;
 }
+
 
 
 a:link, a:visited, a:hover, a:active {

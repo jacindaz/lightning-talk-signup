@@ -1,13 +1,12 @@
 require 'rubygems'
 require 'sinatra'
-require 'sinatra/base'
 require 'rack-flash'
 require 'sinatra/redirect_with_flash'
 require 'pg'
 
 require_relative 'app/models/helpers'
-# enable :sessions
-# use Rack::Flash
+enable :sessions
+use Rack::Flash
 # helpers Sinatra::RedirectWithFlash
 
 
@@ -56,7 +55,7 @@ post '/add_talk' do
     save_to_db(@first_name, @last_name, @talk_title, @description)
     redirect '/thanks'
   else
-    flash.now[:notice] = "I'm sorry, your talk could not be saved."
+    flash[:notice] = "I'm sorry, your talk could not be saved."
     redirect '/'
   end
 end
