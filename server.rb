@@ -32,7 +32,10 @@ post '/add_talk' do
   @talk_title = params["usertalktopic"]
   @description = params["talk_description"]
 
-  if !is_empty?(@first_name, @last_name, @talk_title, @description) && !is_dupe?(@first_name, @last_name, @talk_title, @description)
+  is_empty = !is_empty?(@first_name, @last_name, @talk_title, @description)
+  is_dupe = !is_dupe?(@first_name, @last_name, @talk_title, @description)
+
+  if is_empty && is_dupe
     save_to_db(@first_name, @last_name, @talk_title, @description)
     redirect '/thanks'
   else

@@ -45,7 +45,7 @@ end
 
 def save_to_db(first, last, topic, description)
   insert = "INSERT INTO talks (first_name, last_name, talk_title, description, created_at)
-              VALUES ($1, $2, $3, $4, now())"
+            VALUES ($1, $2, $3, $4, now())"
   @insert_db = db_connection do |conn|
               conn.exec_params(insert, [first, last, topic, description])
             end
