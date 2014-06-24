@@ -1,5 +1,4 @@
 require 'pg'
-require 'pry'
 
 def db_connection
   begin
@@ -35,11 +34,7 @@ end
 def is_empty?(first, last, topic, description)
   return first.empty? || last.empty? || topic.empty? || description.empty?
 end
-#puts is_empty?('', '', '')               # returns true
-#puts is_empty?('', 'Zhong', '')           # returns true
 
-
-#true if no duplicates, false if is a dupe
 def is_dupe?(first, last, topic, description)
   all_talks = return_all_talks
   first_exist = false
@@ -65,7 +60,3 @@ def is_dupe?(first, last, topic, description)
   end
   false
 end
-
-#puts is_dupe?("Jacinda", "Blah", "lala")       # return false
-#puts is_dupe?('Jacinda', 'Zhong', 'lala')       # return true
-

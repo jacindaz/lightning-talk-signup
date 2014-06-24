@@ -1,16 +1,37 @@
-require 'sinatra'
 require 'rubygems'
-require 'pry'
-require 'pg'
+require 'sinatra'
+require 'sinatra/base'
+require 'rack-flash'
 require 'sinatra/redirect_with_flash'
-require 'sinatra/flash'
+require 'pg'
 
 require_relative 'app/models/helpers'
-enable :sessions
+# enable :sessions
+# use Rack::Flash
 # helpers Sinatra::RedirectWithFlash
+
 
 configure do
   set :views, 'app/views'
+end
+
+def production_database_config
+  db_url_parts = ENV['DATABASE_URL'].split(/\/|:|@/)
+
+  {
+    user: db_url_parts[3],
+    password: db_url_parts[4],
+    host: db_url_parts[5],
+    dbname: db_url_parts[7]
+  }
+end
+
+configure :development do
+  set :database_config, { dbname: 'lightning-talks' }
+end
+
+configure :production do
+  set :database_config, production_database_config
 end
 
 #ROUTES and VIEWS--------------------------------------------------------------------------------
@@ -35,7 +56,7 @@ post '/add_talk' do
     save_to_db(@first_name, @last_name, @talk_title, @description)
     redirect '/thanks'
   else
-    flash[:notice] = "I'm sorry, your talk could not be saved."
+    flash.now[:notice] = "I'm sorry, your talk could not be saved."
     redirect '/'
   end
 end
