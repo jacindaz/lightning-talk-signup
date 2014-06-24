@@ -14,25 +14,6 @@ configure do
   set :views, 'app/views'
 end
 
-def production_database_config
-  db_url_parts = ENV['DATABASE_URL'].split(/\/|:|@/)
-
-  {
-    user: db_url_parts[3],
-    password: db_url_parts[4],
-    host: db_url_parts[5],
-    dbname: db_url_parts[7]
-  }
-end
-
-configure :development do
-  set :database_config, { dbname: 'lightning-talks' }
-end
-
-configure :production do
-  set :database_config, production_database_config
-end
-
 #ROUTES and VIEWS--------------------------------------------------------------------------------
 
 get '/' do
