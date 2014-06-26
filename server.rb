@@ -1,18 +1,14 @@
 require 'rubygems'
 require 'sinatra'
-#require 'rack-flash'
-#require 'sinatra/redirect_with_flash'
+require 'sinatra/flash'
 require 'pg'
 
-
 require_relative 'app/models/helpers'
-# enable :sessions
-# use Rack::Flash
-# helpers Sinatra::RedirectWithFlash
 
 
 configure do
   set :views, 'app/views'
+  enable :sessions
 end
 
 #ROUTES and VIEWS--------------------------------------------------------------------------------
@@ -32,20 +28,18 @@ post '/add_talk' do
   @last_name = params["lastname"]
   @talk_title = params["usertalktopic"]
   @description = params["talk_description"]
-  puts "name: #{@first_name}"
 
   is_empty = is_empty?(@first_name, @last_name, @talk_title, @description)
   is_dupe = is_dupe?(@first_name, @last_name, @talk_title, @description)
-  puts "empty: #{is_empty}"
-  puts "dupe: #{is_dupe}"
 
   if !is_empty && !is_dupe
-    puts "if statement"
     save_to_db(@first_name, @last_name, @talk_title, @description)
     redirect '/thanks'
+  elsif is_empty
+    flash[:empty] = "You must fill out all fields to submit."
+    redirect '/'
   else
-    puts "else"
-    #flash[:notice] = "I'm sorry, your talk could not be saved."
+    flash(:one)[:hello] = "I'm sorry, your talk could not be saved."
     redirect '/'
   end
 end
@@ -53,21 +47,3 @@ end
 get '/thanks' do
   erb :thanks
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
