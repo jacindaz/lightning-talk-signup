@@ -38,8 +38,11 @@ post '/add_talk' do
   elsif is_empty
     flash[:empty] = "You must fill out all fields to submit."
     redirect '/'
+  elsif is_dupe
+    flash[:dupe] = "This talk or user is a duplicate, please try again."
+    redirect '/'
   else
-    flash(:one)[:hello] = "I'm sorry, your talk could not be saved."
+    flash[:not_saved] = "I'm sorry, your talk could not be saved."
     redirect '/'
   end
 end
