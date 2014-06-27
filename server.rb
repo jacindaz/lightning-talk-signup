@@ -3,15 +3,23 @@ require 'sinatra'
 require 'sinatra/flash'
 require 'pg'
 
-require_relative 'app/models/helpers'
-
+Dir['app/models/*.rb'].each { |file| require_relative file }
 
 configure do
   set :views, 'app/views'
   enable :sessions
+
+  use OmniAuth::Builder do
+    provider :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET'],
+    scope: 'read:org'
+  end
 end
 
-#ROUTES and VIEWS--------------------------------------------------------------------------------
+configure :development, :testing do
+  set :session_secret, "random string"
+end
+
+#-----------------------------------ROUTES-----------------------------------------
 
 get '/' do
   @all_talks = return_current_talks(24, 6, 2014)
@@ -45,6 +53,32 @@ post '/add_talk' do
     flash[:not_saved] = "I'm sorry, your talk could not be saved."
     redirect '/'
   end
+end
+
+get '/auth/:provider/callback' do
+  #returns a hash with info sent from the provider (such as fb/github)
+  auth = env['omniauth.auth']
+  #parse the hash and retain important user info
+  user_info = {
+    first_name: auth['info']['name'],
+    uid: auth['uid'],
+    email: auth['info']['email'],
+    avatar_url: auth['info']['image']
+  }
+  find_or_create(user_info)
+
+  #save user info into a session
+  session["uid"] = user_info[:uid]
+  session["avatar"] = user_info[:avatar_url]
+  flash[:notice] = "You are signed in as #{user_info[:first_name]}"
+  redirect '/'
+end
+
+get '/sign_out' do
+  session["uid"] = nil
+  session["avatar"] = nil
+  flash[:notice] = "You are now signed out."
+  redirect '/'
 end
 
 get '/thanks' do
