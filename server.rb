@@ -2,7 +2,6 @@ require 'rubygems'
 require 'sinatra'
 require 'sinatra/flash'
 require 'pg'
-require 'pry'
 
 require_relative 'app/models/helpers'
 
@@ -20,7 +19,7 @@ get '/' do
 end
 
 get '/past_talks' do
-  @all_talks = return_all_talks
+  @past_talks = return_past_talks(24,6,2014)
   erb :past_talks
 end
 
