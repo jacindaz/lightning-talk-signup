@@ -41,6 +41,14 @@ def return_all_talks
             end
 end
 
+def return_current_talks(day, month, year)
+  talk_date = "#{year}-#{month}-#{day} 23:59:59.999999"
+  current_talks = "SELECT * FROM talks WHERE created_at > $1"
+  talks = db_connection do |conn|
+              conn.exec_params(current_talks, [talk_date])
+            end
+end
+
 def query_db(query, params)
 
   db_connection do |conn|
@@ -63,7 +71,6 @@ def is_empty?(first, last, topic, description)
   description_validation = description.empty? || (description == "")
   return first_validation || last_validation || topic_validation || description_validation
 end
-#puts is_empty?("", "", "la")
 
 def is_dupe?(first, last, topic, description)
   all_talks = return_all_talks

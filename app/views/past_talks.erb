@@ -1,0 +1,15 @@
+<h3>Previous Lightning Talks</h3>
+
+<ul id="accordion">
+<% increment = 1 %>
+  <% @all_talks.each do |talk| %>
+    <li class="one-talk" id="one-talk">
+        <a href="#anchor-link<%= increment %>" class="talk-header">
+        <h4 class="ui-accordion-header-icon"><%= h talk["first_name"] %> <%= h talk["last_name"] %>: <%= h talk["talk_title"] %>
+        </h4>
+      </a>
+      <p class="talk-body" id="anchor-link<%= increment %>"><%= h talk["description"] %></p>
+      <% increment += 1 %>
+    </li>
+  <% end %>
+</ul>

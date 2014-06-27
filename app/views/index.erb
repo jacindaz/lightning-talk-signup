@@ -8,23 +8,7 @@
   </div>
 <% end %>
 
-<ul id="accordion">
-<% increment = 1 %>
-  <% @all_talks.each do |talk| %>
-    <li class="one-talk" id="one-talk">
-        <a href="#anchor-link<%= increment %>" class="talk-header">
-        <h4 class="ui-accordion-header-icon"><%= h talk["first_name"] %> <%= h talk["last_name"] %>: <%= h talk["talk_title"] %>
-        </h4>
-      </a>
-      <p class="talk-body" id="anchor-link<%= increment %>"><%= h talk["description"] %></p>
-      <% increment += 1 %>
-    </li>
-  <% end %>
-</ul>
-
-<br>
-
-<h3>Give a Lightning Talk!</h3>
+<h3 name="give-talk">Give a Lightning Talk!</h3>
 
 <div id="sign-up">
   <form name="sign_up" id="sign-up" action="/add_talk" method="post" autocomplete="off" class="form-horizontal">
@@ -49,3 +33,21 @@
 
   </form>
 </div>
+
+<br>
+
+<h3 name="next-talk">The next Lightning Talks TBD</h3>
+
+<ul id="accordion">
+<% increment = 1 %>
+  <% @all_talks.each do |talk| %>
+    <li class="one-talk" id="one-talk">
+        <a href="#anchor-link<%= increment %>" class="talk-header">
+        <h4 class="ui-accordion-header-icon"><%= h talk["first_name"] %> <%= h talk["last_name"] %>: <%= h talk["talk_title"] %>
+        </h4>
+      </a>
+      <p class="talk-body" id="anchor-link<%= increment %>"><%= h talk["description"] %></p>
+      <% increment += 1 %>
+    </li>
+  <% end %>
+</ul>

@@ -2,6 +2,7 @@ require 'rubygems'
 require 'sinatra'
 require 'sinatra/flash'
 require 'pg'
+require 'pry'
 
 require_relative 'app/models/helpers'
 
@@ -14,13 +15,13 @@ end
 #ROUTES and VIEWS--------------------------------------------------------------------------------
 
 get '/' do
-  @all_talks = return_all_talks
+  @all_talks = return_current_talks(24, 6, 2014)
   erb :index
 end
 
-get '/test' do
+get '/past_talks' do
   @all_talks = return_all_talks
-  erb :index2
+  erb :past_talks
 end
 
 post '/add_talk' do
