@@ -78,7 +78,7 @@ ul#accordion .ui-state-focus{
 }
 /***********Submitting a talk HTML5 Form styles************/
 #sign-up {
-  width: 700px;
+  width: 80%;
 }
 input[required] {
     background-color: #f7fdff;
