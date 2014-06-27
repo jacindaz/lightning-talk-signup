@@ -1,6 +1,12 @@
-<div class="flash">
-  <h4><%= styled_flash %></h4>
-</div>
+<% if !flash.empty? %>
+  <div class="flash">
+    <% flash.each do |key, value| %>
+      <div class="<%= key %>">
+        <center><h4><%= value %></h4></center>
+      </div>
+    <% end %>
+  </div>
+<% end %>
 
 <ul id="accordion">
 <% increment = 1 %>
