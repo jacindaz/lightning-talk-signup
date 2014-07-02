@@ -32,6 +32,14 @@ get '/past_talks' do
   erb :past_talks
 end
 
+get '/what' do
+  erb :what
+end
+
+get '/about' do
+  erb :about
+end
+
 post '/add_talk' do
   @first_name = params["firstname"]
   @last_name = params["lastname"]
