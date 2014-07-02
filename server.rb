@@ -2,6 +2,7 @@ require 'rubygems'
 require 'sinatra'
 require 'sinatra/flash'
 require 'pg'
+require 'omniauth-github'
 
 Dir['app/models/*.rb'].each { |file| require_relative file }
 
@@ -16,7 +17,7 @@ configure do
 end
 
 configure :development, :testing do
-  set :session_secret, "random string"
+  require 'pry'
 end
 
 #-----------------------------------ROUTES-----------------------------------------
@@ -55,29 +56,19 @@ post '/add_talk' do
   end
 end
 
-get '/auth/:provider/callback' do
-  #returns a hash with info sent from the provider (such as fb/github)
+get '/auth/github/callback' do
+  binding.pry
   auth = env['omniauth.auth']
-  #parse the hash and retain important user info
-  user_info = {
-    first_name: auth['info']['name'],
-    uid: auth['uid'],
-    email: auth['info']['email'],
-    avatar_url: auth['info']['image']
-  }
-  find_or_create(user_info)
+  user = User.find_or_create_from_omniauth(auth)
+  set_current_user(user)
+  flash[:notice] = "You're now signed in as #{user.username}!"
 
-  #save user info into a session
-  session["uid"] = user_info[:uid]
-  session["avatar"] = user_info[:avatar_url]
-  flash[:notice] = "You are signed in as #{user_info[:first_name]}"
   redirect '/'
 end
 
 get '/sign_out' do
-  session["uid"] = nil
-  session["avatar"] = nil
-  flash[:notice] = "You are now signed out."
+  session[:user_id] = nil
+  flash[:notice] = "You have been signed out."
   redirect '/'
 end
 
