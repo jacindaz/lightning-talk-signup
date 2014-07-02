@@ -1,4 +1,4 @@
-== Lightning Talk SignUp
+## Lightning Talk SignUp
 
 This Sinatra application was created for Launch Academy bi-weekly lightning talk sign-ups. It uses the jQuery accordion to display talk information and details. The arrow icons were custom icons from iconfinder.com, and uses a PostgreSQL database to save current and past talks.
 
