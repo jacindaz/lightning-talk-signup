@@ -34,6 +34,35 @@ def db_connection
   end
 end
 
+#-----------------------------------ADD NEW USERS TO DB-----------------------------------------
+
+# Method that cycles thru the array of hashes for all uid's in our database
+def include_uid?(uid, data)
+  data.each do |hash|
+    return true if hash["uid"] == uid
+  end
+  false
+end
+
+def find_or_create(attributes)
+  connection = PG.connect(settings.database_config)
+  uids = connection.exec('SELECT uid FROM users')
+  uids = uids.to_a
+
+  if !include_uid?(attributes[:uid], uids)
+    insert_db = "INSERT INTO users (uid, email, avatar_url, username, location, company, nickname)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)"
+    connection.exec_params(insert_db, [attributes[:uid],
+                                  attributes[:email],
+                                  attributes[:avatar_url],
+                                  attributes[:name],
+                                  attributes[:location],
+                                  attributes[:company],
+                                  attributes[:nickname]])
+  end
+end
+
+#-----------------------------------QUERY THE DB-----------------------------------------
 def return_all_talks
   all_talks = "SELECT * FROM talks"
   talks = db_connection do |conn|
@@ -71,6 +100,8 @@ def save_to_db(first, last, topic, description)
               conn.exec_params(insert, [first, last, topic, description])
             end
 end
+
+#-----------------------------------DB VALIDATIONS-----------------------------------------
 
 def is_empty?(first, last, topic, description)
   first_validation = first.empty? || (first == "")

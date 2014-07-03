@@ -14,6 +14,9 @@ class User
     @provider = attributes[:provider]
     @email = attributes[:email]
     @avatar_url = attributes[:avatar_url]
+    @username = attributes[:name]
+    @location = attributes[:location]
+    @company = attributes[:company]
   end
 
   def self.create(attributes)
@@ -23,7 +26,6 @@ class User
     # This is where you would want to store the user in the database rather
     # than the in a global variable
     @@all << user
-
     user
   end
 
@@ -37,3 +39,6 @@ class User
     all.find { |user| user.id == id }
   end
 end
+
+
+

@@ -80,8 +80,7 @@ end
 
 helpers do
   def current_user
-    id = session['user_id']
-    @current_user ||= User.find_by_id(id)
+    @current_user ||= session['uid']
   end
 
   def signed_in?
@@ -103,22 +102,31 @@ get '/auth/:provider/callback' do
   # Facebook or Github
   user_attributes = {
     uid: auth['uid'],
+    username: auth['info']['name'],
     provider: auth['provider'],
     email: auth['info']['email'],
-    avatar_url: auth['info']['image']
+    avatar_url: auth['info']['image'],
+    location: auth['location'],
+    company: auth['company'],
+    nickname: auth['info']['nickname']
   }
 
-  user = User.create(user_attributes)
+  #user = User.create(user_attributes)
+  find_or_create(user_attributes)
 
   # Save the id of the user that's logged in inside the session
-  session["user_id"] = user.id
+  session["uid"] = user_attributes[:uid]
+  session["pic"] = user_attributes[:avatar_url]
+  flash[:notice] = "You have signed in as #{user_attributes[:name]}"
 
   redirect '/'
 end
 
 get '/sign_out' do
   # Sign the user out by removing the id from the session
-  session["user_id"] = nil
+  session["uid"] = nil
+  flash[:notice] = "You have signed out"
+
   redirect '/'
 end
 
