@@ -12,8 +12,8 @@
 <p>This is the if signed in block of code</p>
 <% if signed_in? %>
   <p>
-    <img src="<%= current_user.avatar_url %>">
-    Signed in with <%= current_user.provider.capitalize %> as <%= current_user.email %>.
+    <img src="<%= @current_user.avatar_url %>">
+    Signed in with <%= @current_user.provider.capitalize %> as <%= @current_user.email %>.
     <a href="/sign_out">Sign out</a>
   </p>
 <% else %>
