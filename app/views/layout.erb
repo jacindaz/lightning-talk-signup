@@ -25,19 +25,19 @@
 <body>
 
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-9">
     <a href="/" style="text-decoration:none;">
       <h2 class="header" style="text-align:left;">
         <img src="/images/launch-academy-logo.png" id="launch-logo">&nbsp;The (En)Lightning Talks
       </h2>
     </a>
   </div>
-  <div class="col-md-4 hidden-xs">
+  <div class="col-md-3 hidden-xs">
     <h4 style="text-align:right;">
       <ul style="list-style: none;">
         <li class="header-list-item"><a href="/">Give a Talk!</a></li>
         <li class="header-list-item"><a href="/about">About this Site</a></li>
-        <li class="header-list-item"><a href="/what">What is a Lightning Talk?</a></li>
+        <li class="header-list-item"><a href="/what">What's a Lightning Talk?</a></li>
         <li class="header-list-item"><a href="/past_talks">Past Talks</a></li>
       </ul>
     </h4>
@@ -46,6 +46,18 @@
 
 
 <div id="inner-div">
+
+<% if signed_in? %>
+  <p>
+    <img src="<%= current_user.avatar_url %>">
+    Signed in with <%= current_user.provider.capitalize %> as <%= current_user.email %>.
+    <a href="/sign_out">Sign out</a>
+  </p>
+<% end %>
+
+
+<%= styled_flash %>
+
 
 <section>
   <%= yield %>

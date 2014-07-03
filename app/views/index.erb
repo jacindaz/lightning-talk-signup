@@ -8,37 +8,14 @@
   </div>
 <% end %>
 
-<!-- <button onclick="/auth/github"><a href="/auth/github">Login with Github</a></button> -->
+<h3>Want to give a Lightning Talk?</h3>
 
-<h3 name="give-talk">Give a Lightning Talk!</h3>
+<button onclick="/auth/github"><a href="/auth/github">Login with Github</a></button>
+<button onclick="/auth/facebook"><a href="/auth/facebook">Login with Facebook</a></button>
 
-<div id="sign-up">
-  <form name="sign_up" id="sign-up" action="/add_talk" method="post" autocomplete="off" class="form-horizontal">
+<br><br><br>
 
-    <div class="form-group form-div">
-      <input type="text" class="form-control" id="input_first_name" name="firstname" placeholder="First name" autofocus><br>
-      <input type="text" class="form-control col-xs-12" id="input_last_name" name="lastname" placeholder="Last name" autofocus>
-    </div>
-
-    <div class="form-group form-div">
-      <input type="text" class="form-control" id="talk_topic" name="usertalktopic" placeholder="Lightning Talk topic" autofocus>
-    </div>
-
-    <br>
-
-    <div class="form-group form-div">
-      <label for="talk-description">Description</label>
-      <textarea class="form-control" id="talk_description" name="talk_description" placeholder="Deets please (up to 255 characters)." maxlength="255" width="500px" rows="5" autofocus></textarea>
-    </div>
-
-    <input type="submit" name="button" value="Get excited!">
-
-  </form>
-</div>
-
-<br>
-
-<h3 name="next-talk">Upcoming Lightning Talks (date TBD)</h3>
+<h3>Upcoming Lightning Talks (Tuesday, July 8, 2014)</h3>
 
 <ul id="accordion">
 <% increment = 1 %>
