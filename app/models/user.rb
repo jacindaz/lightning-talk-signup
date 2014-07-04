@@ -16,6 +16,10 @@ class User
     @nickname = attributes["nickname"]
   end
 
+  def self.find_or_create_by(attributes)
+    return_current_user(attributes[:uid]) || create(attributes)
+  end
+
   def self.create(attributes)
     insert_db = "INSERT INTO users (uid, email, avatar_url, username, location, company, nickname, provider, created_at)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, now())"

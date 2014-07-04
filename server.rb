@@ -152,7 +152,7 @@ get '/auth/:provider/callback' do
   }
 
   #user = User.create(user_attributes)
-  User.create(user_attributes)
+  User.find_or_create_by(user_attributes)
   # binding.pry
 
   # Save the id of the user that's logged in inside the session
