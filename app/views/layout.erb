@@ -47,6 +47,16 @@
 
 <div id="inner-div">
 
+  <div class="log-in">
+    <% if signed_in? %>
+      <p>
+      <img src="<%= @current_user.avatar_url %>" width="60px"><br>
+       <%= @current_user.nickname %>
+      </p>
+      <button onclick="/sign_out"><a href="/sign_out">Sign Out</a></button>
+    <% end %>
+  </div>
+
 <section>
   <%= yield %>
 </section>

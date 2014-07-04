@@ -8,23 +8,34 @@
   </div>
 <% end %>
 
-<h3>Want to give a Lightning Talk?</h3>
 <% if signed_in? %>
-    <p>
-    <img src="<%= @current_user.avatar_url %>">
-    Signed in with <%= @current_user.provider.capitalize %> as <%= @current_user.email %>.
-    <a href="/sign_out">Sign out</a>
-  </p>
-  <button onclick="/sign_out"><a href="/sign_out">Sign Out</a></button>
+  <h3 name="give-talk">Give a Lightning Talk!</h3>
+    <div id="sign-up">
+      <form name="sign_up" id="sign-up" action="/add_talk" method="post" autocomplete="off" class="form-horizontal">
+        <div class="form-group form-div">
+          <input type="text" class="form-control" id="input_first_name" name="firstname" placeholder="First name" autofocus><br>
+          <input type="text" class="form-control col-xs-12" id="input_last_name" name="lastname" placeholder="Last name" autofocus>
+        </div>
+        <div class="form-group form-div">
+          <input type="text" class="form-control" id="talk_topic" name="usertalktopic" placeholder="Lightning Talk topic" autofocus>
+        </div>
+        <br>
+        <div class="form-group form-div">
+          <label for="talk-description">Description</label>
+          <textarea class="form-control" id="talk_description" name="talk_description" placeholder="Deets please (up to 255 characters)." maxlength="255" width="500px" rows="5" autofocus></textarea>
+        </div>
+        <input type="submit" name="button" value="Get excited!">
+      </form>
+    </div>
 <% else %>
-  <button onclick="/auth/github"><a href="/auth/github">Login with Github</a></button>
-  <button onclick="/auth/facebook"><a href="/auth/facebook">Login with Facebook</a></button>
+  <h3>Sign in to give a Lightning Talk</h3>
+    <button onclick="/auth/github"><a href="/auth/github">Login with Github</a></button>
+    <button onclick="/auth/facebook"><a href="/auth/facebook">Login with Facebook</a></button>
 <% end %>
 
 <br><br><br>
 
 <h3>Upcoming Lightning Talks (Tuesday, July 8, 2014)</h3>
-
 <ul id="accordion">
 <% increment = 1 %>
   <% @all_talks.each do |talk| %>

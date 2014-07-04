@@ -37,7 +37,7 @@ a:link, a:visited, a:hover, a:active {
   text-decoration: none;
 }
 
-/***********jQuery Accordion Styles************/
+/****************jQuery Accordion Styles*****************/
 ul#accordion {
   border: 1px solid #999;
   color: #999;
@@ -81,7 +81,7 @@ ul#accordion li.one-talk:first-child { border-top: none; }
 ul#accordion .ui-state-focus{
     outline: none;
 }
-/***********Submitting a talk HTML5 Form styles************/
+/****************Submitting a talk HTML5 Form styles*****************/
 #sign-up {
   width: 80%;
 }
@@ -101,3 +101,8 @@ input[name="usertalktopic"] {
   margin-bottom: 20px;
 }
 #last-name-padding { padding-left: 20px; }
+
+/*********************User Authentication styles**********************/
+.log-in {
+  float:right;
+}

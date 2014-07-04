@@ -10,9 +10,10 @@ class User
     @provider = attributes["provider"]
     @email = attributes["email"]
     @avatar_url = attributes["avatar_url"]
-    @username = attributes["name"]
+    @username = attributes["username"]
     @location = attributes["location"]
     @company = attributes["company"]
+    @nickname = attributes["nickname"]
   end
 
   def self.create(attributes)
