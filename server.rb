@@ -68,8 +68,10 @@ end
 get '/' do
   @all_talks = Talk.return_current_talks(24, 6, 2014)
   if signed_in?
-    @current_user = User.return_current_user(current_user)
+    user = User.return_current_user(session["uid"])
+    @current_user = user[0]
   end
+
   erb :index
 end
 
@@ -138,12 +140,12 @@ get '/auth/:provider/callback' do
 
   #user = User.create(user_attributes)
   User.create(user_attributes)
-  binding.pry
+  # binding.pry
 
   # Save the id of the user that's logged in inside the session
   session["uid"] = user_attributes[:uid]
   session["avatar_url"] = user_attributes[:avatar_url]
-  flash[:notice] = "You have signed in as #{user_attributes[:name]}"
+  flash[:notice] = "You have signed in as #{user_attributes[:username]}"
 
   redirect '/'
 end
