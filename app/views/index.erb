@@ -28,14 +28,18 @@
       </form>
     </div>
 <% else %>
-  <h3>Sign in to give a Lightning Talk</h3>
-    <button onclick="/auth/github"><a href="/auth/github">Login with Github</a></button>
-    <button onclick="/auth/facebook"><a href="/auth/facebook">Login with Facebook</a></button>
+  <center>
+    <h2>Sign in to give a Lightning Talk</h2><br>
+    <button onclick="/auth/github" class="btn btn-default btn-lg">
+      <img src="/images/github.png" width="75px">
+      <a href="/auth/github">Login with Github</a>
+    </button>
+  </center>
 <% end %>
 
 <br><br><br>
 
-<h3>Upcoming Lightning Talks (Tuesday, July 8, 2014)</h3>
+<h3><img src="/images/bolt.jpg" width="75px">Upcoming Lightning Talks (Tuesday, July 8, 2014)</h3>
 <ul id="accordion">
 <% increment = 1 %>
   <% @all_talks.each do |talk| %>
