@@ -2,19 +2,24 @@ require_relative 'database'
 
 class Talk
 
-  def initialize
+  attr_reader :first_name, :last_name, :topic, :description
 
+  def initialize(first, last, topic, description)
+    @first_name = first
+    @last_name = lastname
+    @topic = topic
+    @description = description
   end
 
   #-----------------------------------QUERY THE DB-----------------------------------------
-  def return_all_talks
+  def self.return_all_talks
     all_talks = "SELECT * FROM talks"
     talks = Database.connection do |conn|
                 conn.exec(all_talks)
               end
   end
 
-  def return_current_talks(day, month, year)
+  def self.return_current_talks(day, month, year)
     talk_date = "#{year}-#{month}-#{day} 23:59:59.999999"
     current_talks = "SELECT * FROM talks WHERE created_at > $1"
     talks = Database.connection do |conn|
@@ -22,18 +27,12 @@ class Talk
               end
   end
 
-  def return_past_talks(day, month, year)
+  def self.return_past_talks(day, month, year)
     talk_date = "#{year}-#{month}-#{day} 23:59:59.999999"
     current_talks = "SELECT * FROM talks WHERE created_at < $1"
     talks = Database.connection do |conn|
                 conn.exec_params(current_talks, [talk_date])
               end
-  end
-
-  def query_db(query, params)
-    Database.connection do |conn|
-      conn.exec_params(query, [params])
-    end
   end
 
   def save_to_db(first, last, topic, description)

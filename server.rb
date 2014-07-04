@@ -80,10 +80,8 @@ get '/about' do
 end
 
 post '/add_talk' do
-  @first_name = params["firstname"]
-  @last_name = params["lastname"]
-  @talk_title = params["usertalktopic"]
-  @description = params["talk_description"]
+  talk = Talk.new(params["firstname"], params["lastname"],
+                  params["usertalktopic"], params["talk_description"])
 
   is_empty = is_empty?(@first_name, @last_name, @talk_title, @description)
   is_dupe = is_dupe?(@first_name, @last_name, @talk_title, @description)
