@@ -1,8 +1,5 @@
-configure :development do
-  require 'dotenv'
-  Dotenv.load
-end
-
+require 'dotenv'
+Dotenv.load
 require 'sinatra'
 require 'sinatra/flash'
 require 'omniauth-github'
