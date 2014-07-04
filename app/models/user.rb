@@ -5,14 +5,14 @@ class User
     :location, :company, :nickname
 
   def initialize(attributes)
-    @id = attributes[:id]
-    @uid = attributes[:uid]
-    @provider = attributes[:provider]
-    @email = attributes[:email]
-    @avatar_url = attributes[:avatar_url]
-    @username = attributes[:name]
-    @location = attributes[:location]
-    @company = attributes[:company]
+    @id = attributes["id"]
+    @uid = attributes["uid"]
+    @provider = attributes["provider"]
+    @email = attributes["email"]
+    @avatar_url = attributes["avatar_url"]
+    @username = attributes["name"]
+    @location = attributes["location"]
+    @company = attributes["company"]
   end
 
   def self.create(attributes)

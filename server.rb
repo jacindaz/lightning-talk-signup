@@ -68,8 +68,8 @@ end
 get '/' do
   @all_talks = Talk.return_current_talks(24, 6, 2014)
   if signed_in?
-    user = User.return_current_user(session["uid"])
-    @current_user = user[0]
+    current_user_object = User.return_current_user(session["uid"])
+    @current_user = User.new(current_user_object[0])
   end
 
   erb :index

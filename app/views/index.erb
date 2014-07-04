@@ -11,8 +11,8 @@
 <h3>Want to give a Lightning Talk?</h3>
 <% if signed_in? %>
     <p>
-    <img src="<%= @current_user["avatar_url"] %>">
-    Signed in with <%= @current_user["provider"].capitalize %> as <%= @current_user["email"] %>.
+    <img src="<%= @current_user.avatar_url %>">
+    Signed in with <%= @current_user.provider.capitalize %> as <%= @current_user.email %>.
     <a href="/sign_out">Sign out</a>
   </p>
   <button onclick="/sign_out"><a href="/sign_out">Sign Out</a></button>
