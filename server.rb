@@ -77,14 +77,26 @@ end
 
 get '/past_talks' do
   @past_talks = Talk.return_past_talks(24,6,2014)
+  if signed_in?
+    current_user_object = User.return_current_user(session["uid"])
+    @current_user = User.new(current_user_object[0])
+  end
   erb :past_talks
 end
 
 get '/what' do
+  if signed_in?
+    current_user_object = User.return_current_user(session["uid"])
+    @current_user = User.new(current_user_object[0])
+  end
   erb :what
 end
 
 get '/about' do
+  if signed_in?
+    current_user_object = User.return_current_user(session["uid"])
+    @current_user = User.new(current_user_object[0])
+  end
   erb :about
 end
 
@@ -111,6 +123,10 @@ post '/add_talk' do
 end
 
 get '/thanks' do
+  if signed_in?
+    current_user_object = User.return_current_user(session["uid"])
+    @current_user = User.new(current_user_object[0])
+  end
   erb :thanks
 end
 
