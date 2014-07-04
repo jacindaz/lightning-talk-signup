@@ -8,29 +8,6 @@ Dotenv.load
 
 Dir['app/models/*.rb'].each { |file| require_relative file }
 
-#-----------------------------------CONFIGURE-----------------------------------------
-configure do
-  set :views, 'app/views'
-  enable :sessions
-
-  use OmniAuth::Builder do
-    provider :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET']
-    # scope: 'read:org'     eric didn't use this, not sure why?
-  end
-end
-
-configure :development do
-  set :database_config, { dbname: 'lightning-talks_development' }
-end
-
-configure :production do
-  set :database_config, production_database_config
-end
-
-configure :development, :testing do
-  require 'pry'
-end
-
 #-----------------------------------METHODS-----------------------------------------
 def production_database_config
   db_url_parts = ENV['DATABASE_URL'].split(/\/|:|@/)
@@ -61,6 +38,29 @@ helpers do
   def signed_in?
     !current_user.nil?
   end
+end
+
+#-----------------------------------CONFIGURE-----------------------------------------
+configure do
+  set :views, 'app/views'
+  enable :sessions
+
+  use OmniAuth::Builder do
+    provider :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET']
+    # scope: 'read:org'     eric didn't use this, not sure why?
+  end
+end
+
+configure :development do
+  set :database_config, { dbname: 'lightning-talks_development' }
+end
+
+configure :production do
+  set :database_config, production_database_config
+end
+
+configure :development, :testing do
+  require 'pry'
 end
 
 #-----------------------------------ROUTES-----------------------------------------
