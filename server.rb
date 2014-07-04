@@ -18,6 +18,40 @@ configure do
   end
 end
 
+def production_database_config
+  db_url_parts = ENV['DATABASE_URL'].split(/\/|:|@/)
+
+  {
+    user: db_url_parts[3],
+    password: db_url_parts[4],
+    host: db_url_parts[5],
+    dbname: db_url_parts[7]
+  }
+end
+
+configure :development do
+  set :database_config, { dbname: 'lightning-talks_development' }
+end
+
+configure :production do
+  set :database_config, production_database_config
+end
+
+helpers do
+  include Rack::Utils
+  alias_method :h, :escape_html
+end
+
+def db_connection
+  begin
+    config = Sinatra::Application.settings.database_config
+    connection = PG.connect(config)
+    yield(connection)
+  ensure
+    connection.close
+  end
+end
+
 configure :development, :testing do
   require 'pry'
 end
@@ -26,7 +60,9 @@ end
 
 get '/' do
   @all_talks = return_current_talks(24, 6, 2014)
-  @current_user = User.return_current_user(current_user)
+  if signed_in?
+    @current_user = User.return_current_user(current_user)
+  end
   erb :index
 end
 
@@ -111,10 +147,9 @@ get '/auth/:provider/callback' do
     company: auth['extra']['raw_info']['company'],
     nickname: auth['info']['nickname']
   }
-  binding.pry
 
   #user = User.create(user_attributes)
-  find_or_create(user_attributes)
+  User.create(user_attributes)
 
   # Save the id of the user that's logged in inside the session
   session["uid"] = user_attributes[:uid]

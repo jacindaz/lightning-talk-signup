@@ -1,12 +1,8 @@
 class User
-  # This is a stand in for a database
-  @@all = []
 
-  attr_reader :id,
-    :uid,
-    :provider,
-    :email,
-    :avatar_url
+  attr_reader :id, :uid, :provider,
+    :email, :avatar_url, :username,
+    :location, :company, :nickname
 
   def initialize(attributes)
     @id = attributes[:id]
@@ -20,12 +16,10 @@ class User
   end
 
   def self.create(attributes)
-    attributes.merge(id: all.length + 1)
-    user = self.new(attributes)
-
     insert_db = "INSERT INTO users (uid, email, avatar_url, username, location, company, nickname, created_at, provider)
             VALUES ($1, $2, $3, $4, $5, $6, $7, now(), $8)"
-    connection.exec_params(insert_db, [attributes[:uid].to_i,
+    new_user = Database.connection do |conn|
+              conn.exec_params(insert_db, [attributes[:uid],
                                   attributes[:email],
                                   attributes[:avatar_url],
                                   attributes[:username],
@@ -33,6 +27,7 @@ class User
                                   attributes[:company],
                                   attributes[:nickname],
                                   attributes[:provider]])
+            end
   end
 
   def self.all
@@ -43,7 +38,7 @@ class User
 
   def self.return_current_user(user_id)
     query_user = "SELECT * FROM users WHERE uid = $1"
-    current_user = db_connection do |conn|
+    current_user = Database.connection do |conn|
               conn.exec_params(query_user, [user_id])
             end
   end
