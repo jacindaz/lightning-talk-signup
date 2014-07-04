@@ -1,5 +1,6 @@
 require 'dotenv'
 Dotenv.load
+
 require 'sinatra'
 require 'sinatra/flash'
 require 'omniauth-github'
@@ -151,14 +152,14 @@ get '/auth/:provider/callback' do
     nickname: auth['info']['nickname']
   }
 
-  #user = User.create(user_attributes)
+  # if user exists, find, if not, create
   User.find_or_create_by(user_attributes)
-  # binding.pry
 
   # Save the id of the user that's logged in inside the session
   session["uid"] = user_attributes[:uid]
   session["avatar_url"] = user_attributes[:avatar_url]
-  flash[:notice] = "You have signed in as #{user_attributes[:username]}"
+
+  flash[:notice] = "Hello, #{user_attributes[:username]}!"
 
   redirect '/'
 end
@@ -166,7 +167,8 @@ end
 get '/sign_out' do
   # Sign the user out by removing the id from the session
   session["uid"] = nil
-  flash[:notice] = "You have signed out"
+  session["avatar_url"] = nil
+  flash[:notice] = "See ya later!"
 
   redirect '/'
 end

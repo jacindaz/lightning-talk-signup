@@ -48,14 +48,6 @@ class User
             end
   end
 
-  # does user already exist?
-  def user_exists?(user_id, all_users)
-    all_users.each do |user|
-      return true if user["uid"] == user_id
-    end
-    false
-  end
-
 end
 
 
