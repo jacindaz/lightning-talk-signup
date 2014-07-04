@@ -1,8 +1,9 @@
-require 'dotenv'
-Dotenv.load
+configure :development do
+  require 'dotenv'
+  Dotenv.load
+end
 
 require 'sinatra'
-require 'sinatra/reloader'
 require 'sinatra/flash'
 require 'omniauth-github'
 require 'pg'
@@ -55,6 +56,7 @@ end
 configure :development do
   set :database_config, { dbname: 'lightning-talks_development' }
   require 'pry'
+  require 'sinatra/reloader'
 end
 
 configure :production do
