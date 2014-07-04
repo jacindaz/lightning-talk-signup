@@ -1,11 +1,11 @@
 require 'dotenv'
 Dotenv.load
 
-require 'rubygems'
 require 'sinatra'
+require 'sinatra/reloader'
 require 'sinatra/flash'
-require 'pg'
 require 'omniauth-github'
+require 'pg'
 
 Dir['app/models/*.rb'].each { |file| require_relative file }
 
@@ -54,14 +54,11 @@ end
 
 configure :development do
   set :database_config, { dbname: 'lightning-talks_development' }
+  require 'pry'
 end
 
 configure :production do
   set :database_config, production_database_config
-end
-
-configure :development, :testing do
-  require 'pry'
 end
 
 #-----------------------------------ROUTES-----------------------------------------
