@@ -3,8 +3,6 @@ require 'sinatra'
 require 'sinatra/flash'
 require 'pg'
 require 'omniauth-github'
-require 'dotenv'
-Dotenv.load
 
 Dir['app/models/*.rb'].each { |file| require_relative file }
 
@@ -61,6 +59,8 @@ end
 
 configure :development, :testing do
   require 'pry'
+  require 'dotenv'
+  Dotenv.load
 end
 
 #-----------------------------------ROUTES-----------------------------------------
