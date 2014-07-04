@@ -7,6 +7,7 @@ gem 'sinatra-flash'
 gem 'omniauth-github'
 gem 'omniauth-facebook'
 gem 'sinatra-contrib'         # investigate - not sure what used for
+gem 'dotenv'
 
 group :development, :test do
   gem 'shotgun'
