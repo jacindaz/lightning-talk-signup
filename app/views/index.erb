@@ -9,23 +9,13 @@
 <% end %>
 
 <h3>Want to give a Lightning Talk?</h3>
-<p>This is the if signed in block of code</p>
 <% if signed_in? %>
-  <p>
-    <img src="<%= @current_user.avatar_url %>">
-    Signed in with <%= @current_user.provider.capitalize %> as <%= @current_user.email %>.
-    <a href="/sign_out">Sign out</a>
-  </p>
+  <p>You are signed in</p>
+  <button onclick="/sign_out"><a href="/sign_out">Sign Out</a></button>
 <% else %>
   <button onclick="/auth/github"><a href="/auth/github">Login with Github</a></button>
   <button onclick="/auth/facebook"><a href="/auth/facebook">Login with Facebook</a></button>
 <% end %>
-
-<p>This is the end</p>
-
-<%= styled_flash %>
-<p>end of styled flash</p>
-
 
 <br><br><br>
 
@@ -44,4 +34,3 @@
     </li>
   <% end %>
 </ul>
-attributes

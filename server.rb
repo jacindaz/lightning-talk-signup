@@ -8,6 +8,7 @@ Dotenv.load
 
 Dir['app/models/*.rb'].each { |file| require_relative file }
 
+#-----------------------------------CONFIGURE-----------------------------------------
 configure do
   set :views, 'app/views'
   enable :sessions
@@ -18,6 +19,19 @@ configure do
   end
 end
 
+configure :development do
+  set :database_config, { dbname: 'lightning-talks_development' }
+end
+
+configure :production do
+  set :database_config, production_database_config
+end
+
+configure :development, :testing do
+  require 'pry'
+end
+
+#-----------------------------------METHODS-----------------------------------------
 def production_database_config
   db_url_parts = ENV['DATABASE_URL'].split(/\/|:|@/)
 
@@ -29,37 +43,30 @@ def production_database_config
   }
 end
 
-configure :development do
-  set :database_config, { dbname: 'lightning-talks_development' }
-end
-
-configure :production do
-  set :database_config, production_database_config
+def authorize!
+  unless signed_in?
+    flash[:notice] = "You need to sign in first."
+    redirect '/'
+  end
 end
 
 helpers do
   include Rack::Utils
   alias_method :h, :escape_html
-end
 
-def db_connection
-  begin
-    config = Sinatra::Application.settings.database_config
-    connection = PG.connect(config)
-    yield(connection)
-  ensure
-    connection.close
+  def current_user
+    @current_user ||= session['uid']
   end
-end
 
-configure :development, :testing do
-  require 'pry'
+  def signed_in?
+    !current_user.nil?
+  end
 end
 
 #-----------------------------------ROUTES-----------------------------------------
 
 get '/' do
-  @all_talks = return_current_talks(24, 6, 2014)
+  @all_talks = Talk.return_current_talks(24, 6, 2014)
   if signed_in?
     @current_user = User.return_current_user(current_user)
   end
@@ -67,7 +74,7 @@ get '/' do
 end
 
 get '/past_talks' do
-  @past_talks = return_past_talks(24,6,2014)
+  @past_talks = Talk.return_past_talks(24,6,2014)
   erb :past_talks
 end
 
@@ -83,8 +90,8 @@ post '/add_talk' do
   talk = Talk.new(params["firstname"], params["lastname"],
                   params["usertalktopic"], params["talk_description"])
 
-  is_empty = is_empty?(@first_name, @last_name, @talk_title, @description)
-  is_dupe = is_dupe?(@first_name, @last_name, @talk_title, @description)
+  is_empty = Talk.is_empty?
+  is_dupe = Talk.is_dupe?
 
   if !is_empty && !is_dupe
     save_to_db(@first_name, @last_name, @talk_title, @description)
@@ -106,23 +113,6 @@ get '/thanks' do
 end
 
 #-----------------------------------OMNIAUTH ROUTES-----------------------------------------
-def authorize!
-  unless signed_in?
-    flash[:notice] = "You need to sign in first."
-    redirect '/'
-  end
-end
-
-helpers do
-  def current_user
-    @current_user ||= session['uid']
-  end
-
-  def signed_in?
-    !current_user.nil?
-  end
-end
-
 get '/talk' do
   authorize!
   erb :talk
@@ -148,6 +138,7 @@ get '/auth/:provider/callback' do
 
   #user = User.create(user_attributes)
   User.create(user_attributes)
+  binding.pry
 
   # Save the id of the user that's logged in inside the session
   session["uid"] = user_attributes[:uid]
