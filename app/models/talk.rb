@@ -34,7 +34,7 @@ class Talk
               end
   end
 
-  def save_to_db(user_id, topic, description)
+  def save_to_db
     insert = "INSERT INTO talks (uid, talk_title, description, created_at)
               VALUES ($1, $2, $3, now())"
     @insert_db = Database.connection do |conn|
@@ -44,34 +44,29 @@ class Talk
 
   #-----------------------------------DB VALIDATIONS-----------------------------------------
 
-  def is_empty?(first, last, topic, description)
-    first_validation = first.empty? || (first == "")
-    last_validation = last.empty? || (last == "")
-    topic_validation = topic.empty? || (topic == "")
+  def is_empty?
+    uid_validation = uid.empty? || (uid == "")
     description_validation = description.empty? || (description == "")
-    return first_validation || last_validation || topic_validation || description_validation
+    topic_validation = topic.empty? || (topic == "")
+    return uid_validation || topic_validation || description_validation
   end
 
-  def is_dupe?(first, last, topic, description)
-    all_talks = return_all_talks
-    first_exist = false
-    last_exist = false
+  def is_dupe?
+    all_talks = self.return_all_talks
+    uid_exist = false
     topic_exist = false
     description_exist = false
-    return_all_talks.each do |talk|
-      if talk["first_name"] == first
-        first_exist = true
+    all_talks.each do |talk|
+      if talk["uid"] == uid
+        uid_exist = true
       end
-      if talk["last_name"] == last
-        last_exist = true
-      end
-      if talk["talk_title"] == topic
+      if talk["topic"] == topic
         topic_exist = true
       end
-      if talk["talk_description"] == description
+      if talk["description"] == description
         description_exist = true
       end
-      if (topic_exist || (first_exist && last_exist) || description_exist) == true
+      if (topic_exist && uid_exist) || description_exist) == true
         return true
       end
     end

@@ -92,7 +92,7 @@ post '/add_talk' do
   is_dupe = Talk.is_dupe?
 
   if !is_empty && !is_dupe
-    save_to_db(@first_name, @last_name, @talk_title, @description)
+    talk.save_to_db
     redirect '/thanks'
   elsif is_empty
     flash[:empty] = "You must fill out all fields to submit."
