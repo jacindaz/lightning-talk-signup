@@ -85,8 +85,8 @@ get '/about' do
 end
 
 post '/add_talk' do
-  talk = Talk.new(params["firstname"], params["lastname"],
-                  params["usertalktopic"], params["talk_description"])
+  @current_user = User.return_current_user(session["uid"])
+  talk = Talk.new(@current_user.id, params["usertalktopic"], params["talk_description"])
 
   is_empty = Talk.is_empty?
   is_dupe = Talk.is_dupe?

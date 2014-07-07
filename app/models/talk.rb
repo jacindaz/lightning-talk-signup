@@ -2,11 +2,10 @@ require_relative 'database'
 
 class Talk
 
-  attr_reader :first_name, :last_name, :topic, :description
+  attr_reader :uid, :topic, :description
 
-  def initialize(first, last, topic, description)
-    @first_name = first
-    @last_name = lastname
+  def initialize(uid, topic, description)
+    @uid = uid
     @topic = topic
     @description = description
   end
@@ -35,11 +34,11 @@ class Talk
               end
   end
 
-  def save_to_db(first, last, topic, description)
-    insert = "INSERT INTO talks (first_name, last_name, talk_title, description, created_at)
-              VALUES ($1, $2, $3, $4, now())"
+  def save_to_db(user_id, topic, description)
+    insert = "INSERT INTO talks (uid, talk_title, description, created_at)
+              VALUES ($1, $2, $3, now())"
     @insert_db = Database.connection do |conn|
-                conn.exec_params(insert, [first, last, topic, description])
+                conn.exec_params(insert, [uid, topic, description])
               end
   end
 
