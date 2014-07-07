@@ -143,8 +143,6 @@ get '/auth/:provider/callback' do
 
   # Save the id of the user that's logged in inside the session
   session["uid"] = user_attributes[:uid]
-  puts "Signed in, username: #{@current_user.username}"
-  #binding.pry
   flash[:notice] = "Hello, #{@current_user.username}!"
   redirect '/'
 end
