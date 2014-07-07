@@ -31,12 +31,9 @@ helpers do
   include Rack::Utils
   alias_method :h, :escape_html
 
-  def current_user
-    @current_user ||= session['uid']
-  end
-
   def signed_in?
-    !current_user.nil?
+    #binding.pry
+    session.has_key?("uid")
   end
 end
 
@@ -66,8 +63,9 @@ end
 get '/' do
   @all_talks = Talk.return_current_talks(24, 6, 2014)
   if signed_in?
-    current_user_object = User.return_current_user(session["uid"])
-    @current_user = User.new(current_user_object[0])
+    puts "I am in the / route, and think I am signed in"
+    puts "This is the session: #{session}"
+    @current_user = User.return_current_user(session["uid"])
   end
 
   erb :index
@@ -75,26 +73,14 @@ end
 
 get '/past_talks' do
   @past_talks = Talk.return_past_talks(24,6,2014)
-  if signed_in?
-    current_user_object = User.return_current_user(session["uid"])
-    @current_user = User.new(current_user_object[0])
-  end
   erb :past_talks
 end
 
 get '/what' do
-  if signed_in?
-    current_user_object = User.return_current_user(session["uid"])
-    @current_user = User.new(current_user_object[0])
-  end
   erb :what
 end
 
 get '/about' do
-  if signed_in?
-    current_user_object = User.return_current_user(session["uid"])
-    @current_user = User.new(current_user_object[0])
-  end
   erb :about
 end
 
@@ -121,10 +107,6 @@ post '/add_talk' do
 end
 
 get '/thanks' do
-  if signed_in?
-    current_user_object = User.return_current_user(session["uid"])
-    @current_user = User.new(current_user_object[0])
-  end
   erb :thanks
 end
 
@@ -153,14 +135,16 @@ get '/auth/:provider/callback' do
   }
 
   # if user exists, find, if not, create
-  User.find_or_create_by(user_attributes)
+  if !(User.return_current_user(user_attributes[:uid])).nil?
+    @current_user = User.new(user_attributes)
+  else
+    User.insert_db(user_attributes)
+    @current_user = User.new(user_attributes)
+  end
 
   # Save the id of the user that's logged in inside the session
   session["uid"] = user_attributes[:uid]
-  session["avatar_url"] = user_attributes[:avatar_url]
-
-  flash[:notice] = "Hello, #{user_attributes[:username]}!"
-
+  flash[:notice] = "Hello, #{@current_user.username}!"
   redirect '/'
 end
 

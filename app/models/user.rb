@@ -1,11 +1,10 @@
 class User
 
-  attr_reader :id, :uid, :provider,
+  attr_reader :uid, :provider,
     :email, :avatar_url, :username,
     :location, :company, :nickname
 
   def initialize(attributes)
-    @id = attributes["id"]
     @uid = attributes["uid"]
     @provider = attributes["provider"]
     @email = attributes["email"]
@@ -16,11 +15,11 @@ class User
     @nickname = attributes["nickname"]
   end
 
-  def self.find_or_create_by(attributes)
-    return_current_user(attributes[:uid]) || create(attributes)
+  def find_or_create_by(attributes)
+    self.return_current_user(attributes[:uid]) || insert_db(attributes)
   end
 
-  def self.create(attributes)
+  def self.insert_db(attributes)
     insert_db = "INSERT INTO users (uid, email, avatar_url, username, location, company, nickname, provider, created_at)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, now())"
     new_user = Database.connection do |conn|
@@ -33,6 +32,7 @@ class User
                                   attributes[:nickname],
                                   attributes[:provider]])
             end
+    User.new(attributes)
   end
 
   def self.all
@@ -43,9 +43,15 @@ class User
 
   def self.return_current_user(user_id)
     query_user = "SELECT * FROM users WHERE uid = $1"
+    #current_user returns nil if no user_id matches in the database
     current_user = Database.connection do |conn|
-              conn.exec_params(query_user, [user_id])
-            end
+      conn.exec_params(query_user, [user_id]).first
+    end
+    !current_user.nil? ? User.new(current_user) : nil
+  end
+
+  def self.user_exists?(user_id)
+
   end
 
 end

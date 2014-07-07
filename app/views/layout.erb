@@ -54,6 +54,8 @@
        <%= @current_user.nickname %>
       </p>
       <button onclick="/sign_out"><a href="/sign_out">Sign Out</a></button>
+    <% else %>
+      <p>You are not signed in.</p>
     <% end %>
   </div>
 
