@@ -52,7 +52,7 @@ class Talk
   end
 
   def is_dupe?
-    all_talks = self.return_all_talks
+    all_talks = Talk.return_all_talks
     uid_exist = false
     topic_exist = false
     description_exist = false
@@ -66,12 +66,11 @@ class Talk
       if talk["description"] == description
         description_exist = true
       end
-      if (topic_exist && uid_exist) || description_exist) == true
+      if ((topic_exist && uid_exist) || description_exist) == true
         return true
       end
     end
     false
   end
-
 
 end

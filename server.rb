@@ -86,13 +86,13 @@ end
 
 post '/add_talk' do
   @current_user = User.return_current_user(session["uid"])
-  talk = Talk.new(@current_user.id, params["usertalktopic"], params["talk_description"])
+  new_talk = Talk.new(@current_user.uid, params["usertalktopic"], params["talk_description"])
 
-  is_empty = Talk.is_empty?
-  is_dupe = Talk.is_dupe?
+  is_empty = new_talk.is_empty?
+  is_dupe = new_talk.is_dupe?
 
   if !is_empty && !is_dupe
-    talk.save_to_db
+    new_talk.save_to_db
     redirect '/thanks'
   elsif is_empty
     flash[:empty] = "You must fill out all fields to submit."
