@@ -50,10 +50,6 @@ class User
     !current_user.nil? ? User.new(current_user) : nil
   end
 
-  def self.user_exists?(user_id)
-
-  end
-
 end
 
 

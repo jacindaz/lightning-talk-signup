@@ -136,14 +136,15 @@ get '/auth/:provider/callback' do
 
   # if user exists, find, if not, create
   if !(User.return_current_user(user_attributes[:uid])).nil?
-    @current_user = User.new(user_attributes)
+    @current_user = User.return_current_user(user_attributes[:uid])
   else
-    User.insert_db(user_attributes)
-    @current_user = User.new(user_attributes)
+    @current_user = User.insert_db(user_attributes)
   end
 
   # Save the id of the user that's logged in inside the session
   session["uid"] = user_attributes[:uid]
+  puts "Signed in, username: #{@current_user.username}"
+  #binding.pry
   flash[:notice] = "Hello, #{@current_user.username}!"
   redirect '/'
 end
