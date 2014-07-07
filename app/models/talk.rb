@@ -2,20 +2,40 @@ require_relative 'database'
 
 class Talk
 
-  attr_reader :uid, :topic, :description
+  attr_reader :uid, :topic, :description, :username, :avatar_url, :created_at
 
-  def initialize(uid, topic, description)
-    @uid = uid
-    @topic = topic
-    @description = description
+  def initialize(attributes)
+    # @uid = attributes["uid"]
+    # @topic = attributes["talk_title"]
+    # @description = attributes["description"]
+    # @username = attributes["username"]
+    # @avatar_url = attributes["avatar_url"]
+    @uid = attributes[:uid]
+    @topic = attributes[:talk_title]
+    @description = attributes[:description]
+    @username = attributes[:username]
+    @avatar_url = attributes[:avatar_url]
+    @created_at = DateTime.now
   end
 
   #-----------------------------------QUERY THE DB-----------------------------------------
   def self.return_all_talks
-    all_talks = "SELECT * FROM talks"
+    all_talks_query = "SELECT users.username, users.avatar_url, users.uid,
+                    talks.talk_title, talks.created_at, talks.description, talks.uid
+                  FROM users
+                    JOIN talks ON talks.uid = users.uid"
     talks = Database.connection do |conn|
-                conn.exec(all_talks)
+                conn.exec(all_talks_query)
               end
+    binding.pry
+    if !talks.nil?
+      all_talks = []
+      talks.each do |talk|
+        all_talks << Talk.new(talk)
+      end
+    else
+      return nil
+    end
   end
 
   def self.return_current_talks(day, month, year)
@@ -32,6 +52,14 @@ class Talk
     talks = Database.connection do |conn|
                 conn.exec_params(current_talks, [talk_date])
               end
+  end
+
+  def self.any_talks?
+    any_talks_query = "SELECT * FROM talks"
+    talks = Database.connection do |conn|
+            conn.exec(any_talks_query)
+          end
+    binding.pry
   end
 
   def save_to_db
@@ -52,6 +80,16 @@ class Talk
   end
 
   def is_dupe?
+    query_talks = "SELECT * FROM users WHERE talk_topic = $1"
+
+    talks = Database.connection do |conn|
+      conn.exec_params(query_talks, [topic]).first
+    end
+    binding.pry
+    !talks.nil? ? true : false
+  end
+
+  def is_dupe2?
     all_talks = Talk.return_all_talks
     uid_exist = false
     topic_exist = false

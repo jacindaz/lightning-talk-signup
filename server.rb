@@ -86,19 +86,32 @@ end
 
 post '/add_talk' do
   @current_user = User.return_current_user(session["uid"])
-  new_talk = Talk.new(@current_user.uid, params["usertalktopic"], params["talk_description"])
+  talk_info = {
+      uid: @current_user.uid,
+      talk_title: params["usertalktopic"],
+      description: params["talk_description"],
+      username: @current_user.username,
+      avatar_url: @current_user.avatar_url
+    }
 
-  is_empty = new_talk.is_empty?
-  is_dupe = new_talk.is_dupe?
+  new_talk = Talk.new(talk_info)
+  binding.pry
 
-  if !is_empty && !is_dupe
+  if Talk.any_talks?
+    is_empty = new_talk.is_empty?
+    is_dupe = new_talk.is_dupe?
+  else
+    no_talks = true
+  end
+
+  if !is_empty && !is_dupe && !no_talks
     new_talk.save_to_db
     redirect '/thanks'
   elsif is_empty
     flash[:empty] = "You must fill out all fields to submit."
     redirect '/'
   elsif is_dupe
-    flash[:dupe] = "This talk or user is a duplicate, please try again."
+    flash[:dupe] = "This is a duplicate, please try again."
     redirect '/'
   else
     flash[:not_saved] = "I'm sorry, your talk could not be saved."
