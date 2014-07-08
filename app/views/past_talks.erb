@@ -6,7 +6,7 @@
   <% @past_talks.each do |talk| %>
     <li class="one-talk" id="one-talk">
         <a href="#anchor-link<%= increment %>" class="talk-header">
-        <h4 class="ui-accordion-header-icon"><%= h talk["first_name"] %> <%= h talk["last_name"] %>: <%= h talk["talk_title"] %>
+        <h4 class="ui-accordion-header-icon"><%= h talk["username"] %>: <%= h talk["talk_title"] %>
         </h4>
       </a>
       <p class="talk-body" id="anchor-link<%= increment %>"><%= h talk["description"] %></p>
