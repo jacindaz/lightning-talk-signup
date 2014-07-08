@@ -40,7 +40,11 @@ class Talk
 
   def self.return_current_talks(day, month, year)
     talk_date = "#{year}-#{month}-#{day} 23:59:59.999999"
-    current_talks = "SELECT * FROM talks WHERE created_at > $1"
+    current_talks = "SELECT users.username, users.avatar_url, users.uid,
+                    talks.talk_title, talks.created_at, talks.description, talks.uid
+                  FROM users
+                    JOIN talks ON talks.uid = users.uid
+                  WHERE talks.created_at > $1"
     talks = Database.connection do |conn|
                 conn.exec_params(current_talks, [talk_date])
               end
@@ -48,7 +52,11 @@ class Talk
 
   def self.return_past_talks(day, month, year)
     talk_date = "#{year}-#{month}-#{day} 23:59:59.999999"
-    current_talks = "SELECT * FROM talks WHERE created_at < $1"
+    current_talks = "SELECT users.username, users.avatar_url, users.uid,
+                    talks.talk_title, talks.created_at, talks.description, talks.uid
+                  FROM users
+                    JOIN talks ON talks.uid = users.uid
+                  WHERE talks.created_at > $1"
     talks = Database.connection do |conn|
                 conn.exec_params(current_talks, [talk_date])
               end
