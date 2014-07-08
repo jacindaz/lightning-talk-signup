@@ -27,12 +27,12 @@ class Talk
     talks = Database.connection do |conn|
                 conn.exec(all_talks_query)
               end
-    binding.pry
     if !talks.nil?
       all_talks = []
       talks.each do |talk|
         all_talks << Talk.new(talk)
       end
+      return all_talks
     else
       return nil
     end
@@ -59,7 +59,7 @@ class Talk
     talks = Database.connection do |conn|
             conn.exec(any_talks_query)
           end
-    binding.pry
+    !talks.nil? ? true : false
   end
 
   def save_to_db
@@ -79,13 +79,12 @@ class Talk
     return uid_validation || topic_validation || description_validation
   end
 
-  def is_dupe?
-    query_talks = "SELECT * FROM users WHERE talk_topic = $1"
+  def self.is_dupe?(topic)
+    query_talks = "SELECT * FROM talks WHERE talk_title = $1"
 
     talks = Database.connection do |conn|
       conn.exec_params(query_talks, [topic]).first
     end
-    binding.pry
     !talks.nil? ? true : false
   end
 

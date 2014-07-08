@@ -95,16 +95,13 @@ post '/add_talk' do
     }
 
   new_talk = Talk.new(talk_info)
-  binding.pry
 
   if Talk.any_talks?
     is_empty = new_talk.is_empty?
-    is_dupe = new_talk.is_dupe?
-  else
-    no_talks = true
+    is_dupe = Talk.is_dupe?(new_talk.topic)
   end
 
-  if !is_empty && !is_dupe && !no_talks
+  if !is_empty && !is_dupe
     new_talk.save_to_db
     redirect '/thanks'
   elsif is_empty
