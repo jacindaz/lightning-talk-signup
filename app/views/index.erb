@@ -43,16 +43,16 @@
 <br><br><br>
 
 <h3><img src="/images/bolt.jpg" width="75px">Upcoming Lightning Talks (Tuesday, July 8, 2014)</h3>
-<ul id="accordion">
-<% increment = 1 %>
-  <% @all_talks.each do |talk| %>
-    <li class="one-talk" id="one-talk">
-        <a href="#anchor-link<%= increment %>" class="talk-header">
-        <h4 class="ui-accordion-header-icon"><%= h talk["username"] %>: <%= h talk["talk_title"] %>
-        </h4>
-      </a>
-      <p class="talk-body" id="anchor-link<%= increment %>"><%= h talk["description"] %></p>
-      <% increment += 1 %>
-    </li>
-  <% end %>
-</ul>
+  <ul id="accordion">
+  <% increment = 1 %>
+    <% @all_talks.each do |talk| %>
+      <li class="one-talk" id="one-talk">
+          <a href="#anchor-link<%= increment %>" class="talk-header">
+          <h4 class="ui-accordion-header-icon"><%= h talk["username"] %>: <%= h talk["talk_title"] %>
+          </h4>
+        </a>
+        <p class="talk-body" id="anchor-link<%= increment %>"><%= h talk["description"] %></p>
+        <% increment += 1 %>
+      </li>
+    <% end %>
+  </ul>

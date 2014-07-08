@@ -43,6 +43,7 @@ class Talk
     talks = Database.connection do |conn|
       conn.exec_params(current_talks, [talk_date])
     end
+    !talks.nil? ? talks : nil
   end
 
   def self.return_past_talks(day, month, year)
@@ -51,10 +52,11 @@ class Talk
                     talks.talk_title, talks.created_at, talks.description, talks.uid
                   FROM users
                     JOIN talks ON talks.uid = users.uid
-                  WHERE talks.created_at > $1"
+                  WHERE talks.created_at < $1"
     talks = Database.connection do |conn|
       conn.exec_params(current_talks, [talk_date])
     end
+    !talks.nil? ? talks : nil
   end
 
   def self.any_talks?

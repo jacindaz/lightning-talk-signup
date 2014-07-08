@@ -137,7 +137,8 @@ get '/auth/:provider/callback' do
   end
 
   session["uid"] = user_attributes[:uid]
-  flash[:notice] = "Hello, #{@current_user.username}!"
+  session["username"] = user_attributes[:username]
+  flash[:notice] = "Hello, #{session["username"]}!"
   redirect '/'
 end
 
