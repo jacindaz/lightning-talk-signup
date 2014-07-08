@@ -1,24 +1,10 @@
 require 'dotenv'
 Dotenv.load
-
 require 'sinatra'
 require 'sinatra/flash'
 require 'omniauth-github'
 require 'pg'
-
 Dir['app/models/*.rb'].each { |file| require_relative file }
-
-#-----------------------------------METHODS-----------------------------------------
-def production_database_config
-  db_url_parts = ENV['DATABASE_URL'].split(/\/|:|@/)
-
-  {
-    user: db_url_parts[3],
-    password: db_url_parts[4],
-    host: db_url_parts[5],
-    dbname: db_url_parts[7]
-  }
-end
 
 helpers do
   include Rack::Utils
@@ -29,11 +15,9 @@ helpers do
   end
 end
 
-#-----------------------------------CONFIGURE-----------------------------------------
 configure do
   set :views, 'app/views'
   enable :sessions
-
   use OmniAuth::Builder do
     provider :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET'],
     scope: 'read:org'
@@ -47,7 +31,7 @@ configure :development do
 end
 
 configure :production do
-  set :database_config, production_database_config
+  set :database_config, Database.production_database_config
 end
 
 #-----------------------------------ROUTES-----------------------------------------
@@ -57,7 +41,6 @@ get '/' do
   if signed_in?
     @current_user = User.return_current_user(session["uid"])
   end
-
   erb :index
 end
 
@@ -83,7 +66,6 @@ post '/add_talk' do
       username: @current_user.username,
       avatar_url: @current_user.avatar_url
     }
-
   new_talk = Talk.new(talk_info)
 
   if Talk.any_talks?
@@ -111,11 +93,6 @@ get '/thanks' do
 end
 
 #-----------------------------------OMNIAUTH ROUTES-----------------------------------------
-get '/talk' do
-  authorize!
-  erb :talk
-end
-
 get '/auth/:provider/callback' do
   auth = env['omniauth.auth']
   user_attributes = {
@@ -132,19 +109,21 @@ get '/auth/:provider/callback' do
   # if user exists, find, if not, create
   if !(User.return_current_user(user_attributes[:uid])).nil?
     @current_user = User.return_current_user(user_attributes[:uid])
+    session["username"] = user_attributes[:username]
+    flash[:notice] = "Welcome back, #{session["username"]}!"
   else
     @current_user = User.insert_db(user_attributes)
+    session["username"] = user_attributes[:username]
+    flash[:notice] = "Welcome, #{session["username"]}!"
   end
 
   session["uid"] = user_attributes[:uid]
-  session["username"] = user_attributes[:username]
-  flash[:notice] = "Hello, #{session["username"]}!"
   redirect '/'
 end
 
 get '/sign_out' do
   session["uid"] = nil
-  session["avatar_url"] = nil
+  session["username"] = nil
   flash[:notice] = "See ya later!"
   redirect '/'
 end

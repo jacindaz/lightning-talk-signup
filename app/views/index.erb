@@ -14,7 +14,7 @@
     <img src="<%= @current_user.avatar_url %>" width="60px"><br>
      <%= @current_user.nickname %>
     </p>
-    <button onclick="/sign_out"><a href="/sign_out">Sign Out</a></button>
+    <a href="/sign_out"><button onclick="/sign_out">Sign Out</button></a>
   <% end %>
 </div>
 
@@ -33,10 +33,12 @@
 <% else %>
   <center>
     <h2>Sign in to give a Lightning Talk</h2><br>
-    <button onclick="/auth/github" class="btn btn-default btn-lg">
-      <img src="/images/github.png" width="75px">
-      <a href="/auth/github">Login with Github</a>
-    </button>
+    <a href="/auth/github">
+      <button onclick="/auth/github" class="btn btn-default btn-lg">
+        <img src="/images/github.png" width="75px">
+        Login with Github
+      </button>
+    </a>
   </center>
 <% end %>
 
