@@ -20,19 +20,11 @@ def production_database_config
   }
 end
 
-def authorize!
-  unless signed_in?
-    flash[:notice] = "You need to sign in first."
-    redirect '/'
-  end
-end
-
 helpers do
   include Rack::Utils
   alias_method :h, :escape_html
 
   def signed_in?
-    #binding.pry
     session.has_key?("uid")
   end
 end
@@ -63,8 +55,6 @@ end
 get '/' do
   @all_talks = Talk.return_current_talks(24, 6, 2014)
   if signed_in?
-    puts "I am in the / route, and think I am signed in"
-    puts "This is the session: #{session}"
     @current_user = User.return_current_user(session["uid"])
   end
 
@@ -127,12 +117,7 @@ get '/talk' do
 end
 
 get '/auth/:provider/callback' do
-  # This is returns a hash with all of the information sent back by the
-  # service (Github or Facebook)
   auth = env['omniauth.auth']
-
-  # Build a hash that represents the user from the info given back from either
-  # Facebook or Github
   user_attributes = {
     uid: auth['uid'],
     username: auth['info']['name'],
@@ -151,18 +136,15 @@ get '/auth/:provider/callback' do
     @current_user = User.insert_db(user_attributes)
   end
 
-  # Save the id of the user that's logged in inside the session
   session["uid"] = user_attributes[:uid]
   flash[:notice] = "Hello, #{@current_user.username}!"
   redirect '/'
 end
 
 get '/sign_out' do
-  # Sign the user out by removing the id from the session
   session["uid"] = nil
   session["avatar_url"] = nil
   flash[:notice] = "See ya later!"
-
   redirect '/'
 end
 
